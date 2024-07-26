@@ -1,0 +1,32 @@
+<script th:inline="javascript" th:fragment="TodayBehaviorChart">
+		
+		var b_count_list = [[${behavior}]];
+		var b_rule = b_count_list.map(function(data){return data.rule_no});
+		var b_count = b_count_list.map(function(data) {return data.count});
+		
+		console.log(b_count_list);
+
+		
+		const ctx2 = document.getElementById('myChart2');
+						new Chart(ctx2, {
+						    type: 'pie',
+						    data: {
+						      labels: b_rule ,
+						      datasets: [{
+				//		        label: '# of Votes',
+						        data: b_count,
+					//	        borderWidth: 1
+						      }]
+						    },
+						    options: {
+								indexAxis: 'y',
+						      scales: {
+						        y: {
+						          beginAtZero: true
+						        }
+						      }
+							  }
+							  }
+							  )
+		
+	</script>

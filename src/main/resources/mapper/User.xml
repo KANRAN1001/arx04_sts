@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 이 xml파일은 namespace에 지정한 mapper인터페이스와 연동하여 SQL을 설정할 것이다. 라고 선언한 것. -->
+<mapper namespace="com.example.demo.dao.UserDao">
+	
+	<!-- ID를 가져오는 쿼리 --> 
+	<select id="getById" resultType="String"> 
+		SELECT login_id FROM user WHERE login_id = #{login_id}
+	</select>
+	
+	<!-- PW를 가져오는 쿼리 -->
+	<select id="getByPw" resultType="String"> 
+		SELECT password
+		FROM user 
+		WHERE login_id = #{login_id}
+	</select>
+	
+	<select id="getAllUser" resultType="com.example.demo.dto.User">
+		SELECT *
+		FROM user
+	</select>
+	
+	<insert id="insertUser" parameterType="com.example.demo.dto.User"> 
+		insert into user (user_id, login_id, password, user_privilege, user_name,last_login_date)
+		values 
+		(#{user_id} , #{login_id}, #{password}, #{user_privilege}, #{user_name}, #{last_login_date})	
+	</insert>
+	
+	<update id="updateUser" parameterType="com.example.demo.dto.User">  
+	UPDATE user SET 
+	user_id = #{user_id}, password = #{password}, user_privilege = #{user_privilege}, user_name = #{user_name}
+	,last_login_date = #{last_login_date} WHERE login_id = #{login_id}
+	</update>
+	
+		<delete id="deleteUser" parameterType="String">
+		DELETE FROM user
+		where user_name = #{user_name}
+	</delete>
+	 
+    <update id="updateLastLoginDate" parameterType="Map">
+        UPDATE user 
+        SET last_login_date = #{lastLoginDate} 
+        WHERE login_id = #{loginId}
+    </update>
+
+</mapper>

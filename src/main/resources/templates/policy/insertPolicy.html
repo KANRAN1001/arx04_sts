@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{layout/header :: header}"></head>
+
+<body>
+	<!--navigation-->
+	<div th:replace="~{/layout/body :: navigation}"></div>	
+	<!-- sidebar-->
+	<div th:replace="~{/layout/body :: sidebar}"></div>	
+	
+	
+        <div class="container">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">정책 추가</h1>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            정책을 추가하는 페이지
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+<!--                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            정책 
+                        </div>-->
+                        <div class="card-body">
+							<div class="centerASD">
+                            <form action="insertpolicy" method="get">
+								<table> 
+									<thead>
+										<tr>
+											<th>정책</th>
+											<th>내용</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>활성화/비활성화</td>
+											<td><input type="text" name="activation" placeholder="NOT NULL" ></td>
+											<td>0:비활성화 / 1:활성화</td>
+										</tr>
+											
+										<tr>
+											<td>정책번호</td>
+											<td><input  type="text" name="rule_no" placeholder="NOT NULL" > </td>
+											<td>정책의 번호(고유값)</td>
+										</tr>
+										<tr>
+											<td>아이피</td>
+											<td><input type="text" name="from_ip"></td>
+											<td>탐지할 FROM_IP</td>
+										<tr>
+										<tr>
+											<td>아이피</td>
+											<td><input type="text" name="to_ip"></td>
+											<td>탐지할 TO_IP</td>
+										<tr>											
+											
+
+										<tr>
+											<td>포트</td>
+											<td><input type="text" name="port"></td>
+											<td>탐지할 포트</td>
+										</tr>
+										<tr>
+											<td>패턴1</td>
+											<td><input type="text" name="txt1"></td>
+											<td>패킷탐지 할 단어</td>
+										</tr>
+										<tr>
+											<td>패턴2</td>
+											<td><input type="text" name="txt2"></td>
+											<td>패킷탐지 할 단어</td>
+										</tr>
+										<tr>
+											<td>패턴3</td>
+											<td><input type="text" name="txt3"></td>
+											<td>패킷탐지 할 단어</td>
+										</tr>
+										<tr>
+											<td>기준 횟수</td>
+											<td><input type="text" name="base_cnt" placeholder="NOT NULL"></td>
+											<td>몇번 하면 잡을지</td> 
+										</tr>
+										<tr>
+											<td>기준 초</td>
+											<td><input type="text" name="base_sec" placeholder="NOT NULL"></td>
+											<td>제한시간은 몇초인지</td>
+										</tr>
+										<tr>
+											<td>정책 이름</td>
+											<td><input type="text" name="policy_name" placeholder="NOT NULL"></td>
+											<td>정책 이름(ex.SQL-Injection-1)</td>
+										</tr>
+										<tr>
+											<td>정책 정보</td>
+											<td><input type="text" name="policy_info"></td>
+										</tr>	
+										<tr>
+											<td>탐지 타입</td>
+											<td><input type="text" name="rule_type" placeholder="NOT NULL"></td>
+											<td>0:탐지 / 1:행동</td>
+										</tr>	
+										<tr>
+											<td>액션타입</td>
+											<td><input type="text" name="action_type" placeholder="NOT NULL"></td>
+											<td>0:패스 / 1:탐지 / 2:격리 / 3:차단</td>
+										</tr>		
+									</tbody>
+									<tfoot>
+										<input type="submit" value="정책추가">
+									</tfoot>
+								</table>
+                            </form>
+							</div>
+                        </div>
+                    </div>
+                </div>
+				</main>
+        </div>
+
+    
+
+</body>
+
+</html>

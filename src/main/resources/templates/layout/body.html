@@ -1,0 +1,25 @@
+<!-- 네비게이션바 및 사이드바 외부 코드 -->
+
+ <!-- navbar fragment -->
+<div th:fragment="navigation" class="navi">
+	<nav class="navbar">
+		<ul class="navbar-container">
+			<li > <a href="#" class="active"> ARX04 </a></li>
+			<li> <a href="#"> DB보안 4기 프로젝트 </a></liclass="nav-item">
+			<li > <a href="#"> C++, JAVA 개발자 과정 </a></li>
+			<li > <a href="#"> 데이터베이스 공격 탐지 및 차단 </a></li>
+			<li > <a href="#"> 생광좀 </a></li>
+		</ul>
+	</nav>
+</div>
+<!-- sidebar fragment -->
+ <div th:fragment="sidebar" class="sidebar">
+ 	<ul class="sidebar-container">
+ 		<li > <a href="/dashboard"> Main </a></li>
+ 		<li>  <a href="/Log"> 로그관리 </a></liclass="nav-item">
+ 		<li > <a href="/policyManager"> 정책관리 </a></li>
+ 		<li > <a href="/userManager"> 유저관리 </a></li>
+ 		<li > <a href="#"> 생광좀</a></li>
+	 </ul>
+</div>
+		

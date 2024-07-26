@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{layout/header :: header}"></head>
+
+<body>
+	<!--navigation-->
+	<div th:replace="~{/layout/body :: navigation}"></div>	
+	<!-- sidebar-->
+	<div th:replace="~{/layout/body :: sidebar}"></div>	
+	
+        <div class="container">
+
+                    <div class="card mb-4">
+                        <div class="card-body">
+							<div class="centerASD">
+									<form action="/modify" method="get"> 				
+										<table> 
+											<thead>
+												<tr>
+													<th>정책</th>
+													<th>내용</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>정책번호</td>
+													<td><input class="inputorder" type="text" name="rule_no" readonly th:value="${policy.rule_no}"> </td>
+												</tr>
+												<tr>
+													<td>출발 아이피</td>
+													<td><input type="text" name="from_ip" th:placeholder="${policy.from_ip}"></td>
+												<tr>
+												<tr>
+													<td>도착 아이피</td>
+													<td><input type="text" name="to_ip" th:placeholder="${policy.to_ip}"></td>
+												<tr>													
+												<tr>
+													<td>포트</td>
+													<td><input type="text" name="port" th:placeholder="${policy.port}"></td>
+												</tr>
+												<tr>
+													<td>패턴1</td>
+													<td><input type="text" name="txt1" th:placeholder="${policy.txt1}"></td>
+												</tr>
+												<tr>
+													<td>패턴2</td>
+													<td><input type="text" name="txt2" th:placeholder="${policy.txt2}"></td>
+												</tr>
+												<tr>
+													<td>패턴3</td>
+													<td><input type="text" name="txt3" th:placeholder="${policy.txt3}"></td>
+												</tr>
+												<tr>
+													<td>기준 횟수</td>
+													<td><input type="text" name="base_cnt" th:placeholder="${policy.base_cnt}"></td>
+												</tr>
+												<tr>
+													<td>기준 초</td>
+													<td><input type="text" name="base_sec" th:placeholder="${policy.base_sec}"></td>
+												</tr>
+												<tr>
+													<td>정책 이름</td>
+													<td><input type="text" name="policy_name" th:placeholder="${policy.policy_name}"></td>
+												</tr>
+												<tr>
+													<td>정책 정보</td>
+													<td><input type="text" name="policy_info" th:placeholder="${policy.policy_info}"></td>
+												</tr>
+												
+												<tr>
+													<td>탐지 타입</td>
+													<td><input type="text" name="rule_type" th:value="${rule_type}" placeholder="0:패턴 1:행동"></td>
+												</tr>	
+												<tr>
+													<td>액션타입</td>
+													<td><input type="text" name="action_type" th:value="${action_type}" placeholder=""></td>
+												</tr>		
+											</tbody>
+											<tfoot>
+												<tr><input type="submit" value="정책수정">	</tr>
+											</tfoot>
+										</table>
+										
+							</div>
+                        </div>
+                    </div>
+
+                </div>
+				</main>
+        </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.LogDAO">
+
+	<select id="getTableName" resultType="String" > 
+	  SELECT table_name 
+  	  FROM information_schema.tables 
+  	  WHERE table_name LIKE 'ips_log_%' order by table_name desc;
+	</select>
+
+    <!-- 기간별 로그 조회 쿼리 -->
+<select id="getAllLogsByDates" parameterType="list" resultType="com.example.demo.dto.Log">
+    <foreach collection="list" item="tableName" separator=" UNION ALL ">
+        SELECT * FROM ${tableName}
+    </foreach>
+    	limit 30
+</select>
+
+    <!-- 필터링을 포함한 로그 조회 쿼리 -->
+    <select id="getAllLogsByFilter" parameterType="map" resultType="com.example.demo.dto.Log">
+        <foreach collection="dates" item="date" separator=" UNION ALL ">
+            SELECT * FROM ips_log_${date}
+            <where>
+                <if test="startTime != null and endTime != null">
+                    AND time_stamp BETWEEN #{startTime} AND #{endTime}
+                </if>
+                <if test="src_ip != null and src_ip.trim() != ''">
+                    AND src_ip = #{src_ip}
+                </if>
+                <if test="src_port != null and src_port.trim() != ''">
+                    AND src_port = #{src_port}
+                </if>
+                <if test="dst_ip != null and dst_ip.trim() != ''">
+                    AND dst_ip = #{dst_ip}
+                </if>
+                <if test="dst_port != null and dst_port.trim() != ''">
+                    AND dst_port = #{dst_port}
+                </if>
+                <if test="type != null and type.trim() != ''">
+                    AND type = #{type}
+                </if>
+                <if test="minViolationTime != null and maxViolationTime != null">
+                    AND violation_time BETWEEN #{minViolationTime} AND #{maxViolationTime}
+                </if>
+                <if test="minViolationCnt != null and maxViolationCnt != null">
+                    AND violation_cnt BETWEEN #{minViolationCnt} AND #{maxViolationCnt}
+                </if>
+                <if test="rule_no != null and rule_no.trim() != ''">
+                    AND rule_no = #{rule_no}
+                </if>
+            </where>
+        </foreach>
+    </select>
+
+</mapper>

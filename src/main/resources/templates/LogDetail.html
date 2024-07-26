@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{/layout/header :: header}">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        nav, footer {
+            flex: 0 0 auto;
+        }
+        main {
+            flex: 1 0 auto;
+        }
+        .container-fluid {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+    </style>
+</head>
+<body class="sb-nav-fixed">
+    <nav th:replace="~{/layout/body :: navigation}"></nav>
+    <div th:replace="~{/layout/body :: sidebar}"></div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">상세 설명 페이지</h1>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        페이로드 상세 페이지
+                    </div>
+                </div>
+                <h1>Log Detail Page</h1>
+                <div>
+                    <h2>Payload (HEX)</h2>
+                    <p th:text="${payload}">Payload 값이 여기에 표시됩니다</p>
+                </div>
+                <div>
+                    <h2>Decoded Payload</h2>
+                    <p th:text="${decodedPayload}">해석된 Payload 값이 여기에 표시됩니다</p>
+                </div>
+                <button class="btn btn-primary" onclick="history.back()">뒤로 가기</button>
+            </div>
+        </main>
+    </div>
+  
+</body>
+</html>

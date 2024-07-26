@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	
+<head th:insert="~{layout/header :: header}"></head>
+
+<body class="sb-nav-fixed">
+    <nav th:replace="~{/layout/body :: navbar}"></nav>
+    <div th:replace="~{/layout/body :: sidebar}"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Payload Details</h1>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5>Log Payload</h5>
+                                <pre th:text="${log.payload}"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer th:replace="~{/layout/footer :: footer}"></footer>
+
+    <!-- 스크립트 유지 -->
+    <script th:replace="~{/layout/js :: js1}"></script>
+    <script th:replace="~{/layout/js :: js2}"></script>
+    <script th:replace="~{/layout/js :: js3}"></script>
+    <script th:replace="~{/layout/js :: js4}"></script>
+    <script th:replace="~{/layout/js :: js5}"></script>
+    <script th:replace="~{/layout/js :: js6}"></script>
+    <script th:replace="~{/layout/js :: js7}"></script>
+    <script th:replace="~{/layout/js :: js8}"></script>
+    <script th:replace="~{/layout/js :: js9}"></script>
+    <script th:replace="~{/layout/js :: js10}"></script>
+    <script th:replace="~{/layout/js :: js11}"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{layout/header :: header}"></head>
+<body>
+    <div class="bg-secondary rounded h-100 p-4">
+        <h6 class="mb-4">로그인 리스트</h6>
+        <form method="post">
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>사용자 아이디(내부 관리ID)</th>
+                        <th>로그인 아이디</th>
+                        <th>로그인 패스워드</th>
+                        <th>사용자 권한</th>
+                        <th>사용자 이름</th>
+                        <th>사용자 마지막접속 기록</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user, iterstat : ${users}">
+                        <td th:text="${iterstat.index}"></td>
+                        <td th:text="${user.user_id}"></td>
+                        <td th:text="${user.login_id}"></td>
+                        <td th:text="${user.password}"></td>
+                        <td th:text="${user.user_privilege}"></td>
+                        <td th:text="${user.user_name}"></td>
+                        <td th:text="${user.last_login_date}"></td>
+                        <td> 
+                    		<button type="button" value="삭제"></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div>
+        <form action="dashboard" method="post">
+            <button type="submit" class="btn btn-success rounded-pill m-2">유저 추가</button>
+        </form>
+    </div>
+</body>
+<footer th:replace="~{/layout/footer :: footer}"></footer>
+
+    <!-- 스크립트 유지 -->
+    <script th:replace="~{/layout/js :: js1}"></script>
+    <script th:replace="~{/layout/js :: js2}"></script>
+    <script th:replace="~{/layout/js :: js3}"></script>
+    <script th:replace="~{/layout/js :: js4}"></script>
+    <script th:replace="~{/layout/js :: js5}"></script>
+    <script th:replace="~{/layout/js :: js6}"></script>
+    <script th:replace="~{/layout/js :: js7}"></script>
+    <script th:replace="~{/layout/js :: js8}"></script>
+    <script th:replace="~{/layout/js :: js9}"></script>
+    <script th:replace="~{/layout/js :: js10}"></script>
+    <script th:replace="~{/layout/js :: js11}"></script>
+</html>

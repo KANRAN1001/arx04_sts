@@ -1,0 +1,34 @@
+<script th:inline="javascript" th:fragment="weekchart">
+		
+		var p_count_list = [[${pattern}]];
+		var p_rule =  p_count_list.map(function(data){return data.rule_no});
+		var p_count =  p_count_list.map(function(data) {return data.count});
+		
+
+		
+		const ctx1 = document.getElementById('myChart1');
+						new Chart(ctx1, {
+						    type: 'pie',
+						    data: {
+						      labels: p_rule, 
+						      datasets: [{
+						        label: '# of Votes',
+						        data: p_count ,
+						        borderWidth: 1,
+								backgroundColor: ['rgba(255,99,132,0.2)', 'rgba(54,162,235,0.2)' ],
+								borderdColor: ['rgba(255,99,132,0.2)', 'rgba(54,162,235,0.2)' ]
+						      }]
+						    }, 
+
+						    options: {
+								indexAxis: 'y',
+						      scales: {
+						        y: {
+						          beginAtZero: true
+						        }
+						      }
+							  }
+							  }
+							  )
+		
+</script>

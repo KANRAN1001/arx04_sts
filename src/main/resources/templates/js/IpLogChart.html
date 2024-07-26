@@ -1,0 +1,32 @@
+<script th:inline="javascript" th:fragment="ipLogChart">
+	var iplog = [[${ipLogging}]];
+	var type4 = iplog.map(function(data){return data.src_ip});
+	var count4 = iplog.map(function(data) {return data.count});
+
+	
+	const ctx4 = document.getElementById('myChart4');
+	new Chart(ctx4, {
+	    type: 'pie',
+	    data: {
+	      labels: type4, 
+	      datasets: [{
+	        label: '# of Votes',
+	        data: count4 ,
+	        borderWidth: 1,
+			backgroundColor: ['rgba(255,99,132,0.2)', 'rgba(54,162,235,0.2)' ],
+			borderdColor: ['rgba(255,99,132,0.2)', 'rgba(54,162,235,0.2)' ]
+	      }]
+	    }, 
+
+	    options: {
+			indexAxis: 'y',
+	      scales: {
+	        y: {
+	          beginAtZero: true
+	        }
+	      }
+		  }
+		  }
+		  )
+	
+</script>

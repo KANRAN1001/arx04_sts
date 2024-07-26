@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper 인터페이스인 DashboardDao와 연동 설정 한것  -->
+<mapper namespace="com.example.demo.dao.DashboardDao">
+	
+	<!-- getTodayDetectionsCount() 인터페이스와 연동되는 쿼리문 / 당일 행동 및 패턴기반 탐지 횟수를 반환  -->
+	<select id="getTodayDetectionsCount" resultType="com.example.demo.dto.dashboard.Detection" parameterType="String">
+		select type ,count(*) AS count from ips_log_${today} group by type;
+	</select>
+	
+	<!-- getTodayBehaviorCount() 인터페이스와 연동되는 쿼리문 / 당일 행동기반 탐지 횟수를 정책별로 반환  -->
+	<select id="getTodayBehaviorCount" resultType="com.example.demo.dto.dashboard.Behavior" parameterType="String">
+		select rule_no, count(*) as count from ips_log_${today} where type = "BEHAVIOR" group by rule_no;
+	</select>
+	
+	<!-- getTodayPatternCount() 인터페이스와 연동되는 쿼리문 / 당일 행동기반 탐지 횟수를 정책별로 반환  -->
+	<select id="getTodayPatternCount" resultType="com.example.demo.dto.dashboard.Pattern" parameterType="String">
+		select rule_no, count(*) as count from ips_log_${today} where type = "PATTERN" group by rule_no;
+	</select>
+	
+	<!-- getWeekBehaviorCount() 인터페이스와 연동되는 쿼리문 / 일주일간의 행동기반 탐지 횟수를 반환  -->
+	<select id="getWeekBehaviorCount" resultType="com.example.demo.dto.dashboard.Week" parameterType="java.util.List">
+		<foreach item="date" collection="list" separator="UNION ALL"> 
+			select '${date}' as date , count(*) as count from ips_log_${date} where type = "BEHAVIOR"
+		</foreach> 
+	</select>
+	
+	<!-- getWeekPatternCount() 인터페이스와 연동되는 쿼리문 / 일주일간의 패턴기반 탐지 횟수를 반환  -->
+	<select id="getWeekPatternCount" resultType="com.example.demo.dto.dashboard.Week" parameterType="java.util.List">
+		<foreach item="date" collection="list" separator="UNION ALL"> 
+			select '${date}' as date , count(*) as count from ips_log_${date} where type = "PATTERN"
+		</foreach> 
+	</select>
+	
+	<!-- getWeekLogging() 인터페이스와 연동되는 쿼리문 / 최근 5건의 로깅건을 반환-->
+	<select id="getWeekLogging" resultType="com.example.demo.dto.dashboard.LoggingTable" parameterType="String"> 
+		SELECT TYPE, rule_no, src_ip, time_stamp, payload FROM ips_log_20240724 order by time_stamp desc limit 5;
+	</select>
+	
+	<select id="getActivePolicy" resultType="com.example.demo.dto.Policy"> 
+		select * from policy_ips_rules where activation = 1;
+	</select>
+	
+	<!-- getIpLogging() 인터페이스와 연동되는 쿼리문 / IP별 로깅 횟수를 반환  -->
+	<select id="getIpLogging" resultType="java.util.Map"> 
+		SELECT src_ip, count(*) as count FROM ips_log_20240724 group by src_ip;
+	</select>
+	
+</mapper>

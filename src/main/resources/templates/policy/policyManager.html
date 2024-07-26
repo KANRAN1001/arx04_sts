@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{layout/header :: header}"></head>
+
+<body class="sb-nav-fixed">
+    <!--navigation-->
+    <div th:replace="~{/layout/body :: navigation}"></div>
+    <!-- sidebar-->
+    <div th:replace="~{/layout/body :: sidebar}"></div>
+
+	<div class="container">
+	    <!-- 기간별 로그 조회 폼 -->
+	    <div class="form-container">
+			
+			<div class="card mb-4">
+			    <div class="card-header">
+			        <i class="fas fa-calendar-day me-1"></i>
+			        로그 조회
+			    </div>
+			    <div class="card-body">
+			        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#searchModal">
+			            <i class="fas fa-search"></i> 검색 조건 설정
+			        </button>
+			    </div>
+			</div>
+			
+<!--	        <form method="get" action="search_policy" id="logForm">
+	            <div class="form-group">
+	                <label for="activation">activation</label>
+	                <input type="number" name="activation" placeholder="1:활성화 0:비활성화">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="rule_no">rule_no</label>
+	                <input type="text" name="rule_no">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="from_ip">from_ip</label>
+	                <input type="text" name="from_ip">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="to_ip">to_ip</label>
+	                <input type="text" name="to_ip">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="port">port</label>
+	                <input type="number" name="port">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="txt1">txt1</label>
+	                <input type="text" name="txt1">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="txt2">txt2</label>
+	                <input type="text" name="txt2">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="txt3">txt3</label>
+	                <input type="text" name="txt3">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="base_cnt">base_cnt</label>
+	                <input type="number" name="base_cnt">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="base_sec">base_sec</label>
+	                <input type="number" name="base_sec">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="policy_name">policy_name</label>
+	                <input type="text" name="policy_name">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="policy_info">policy_info</label>
+	                <input type="text" name="policy_info">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="rule_type">rule_type</label>
+	                <input type="number" name="rule_type" placeholder="0:패턴 1:행동">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="action_type">action_type</label>
+	                <input type="number" name="action_type">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="from_create_date">from_create_date</label>
+	                <input type="datetime-local" name="from_create_date">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="to_create_date">to_create_date</label>
+	                <input type="datetime-local" name="to_create_date">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="from_modify_date">from_modify_date</label>
+	                <input type="datetime-local" name="from_modify_date">
+	            </div>
+
+	            <div class="form-group">
+	                <label for="to_modify_date">to_modify_date</label>
+	                <input type="datetime-local" name="to_modify_date">
+	            </div>
+
+	            <div class="button-group">
+	                <button type="submit" class="btn btn-primary">
+	                    <i class="fas fa-search"></i> 조회
+	                </button>
+	                <button type="button" class="btn btn-secondary" onclick="resetForm()">
+	                    <i class="fas fa-undo"></i> 초기화
+	                </button>
+	            </div>
+	        </form>
+	    </div>-->
+		
+		
+
+		
+		
+	    <!-- 정책을 테이블 형식으로 보여줌 -->
+	    <div class="policy-section">
+	        <table class="policy-table">
+	            <thead>
+	                <tr>
+	                    <th>no</th>
+	                    <th>activation</th>
+	                    <th>정책번호</th>
+	                    <th>FROM_IP</th>
+	                    <th>TO_IP</th>
+	                    <th>PORT</th>
+	                    <th>TXT1</th>
+	                    <th>TXT2</th>
+	                    <th>TXT3</th>
+	                    <th>base_cnt</th>
+	                    <th>base_sec</th>
+	                    <th>policy_name</th>
+	                    <th>policy_info</th>
+	                    <th>rule_type</th>
+	                    <th>action_type</th>
+	                    <th>create_date</th>
+	                    <th>modify_date</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr th:each="policy, iterstat : ${policy}">
+	                    <td th:text="${iterstat.index + 1}"></td>
+	                    <td>
+	                        <button type="button"
+	                                th:onclick="update_activation(event,[[${policy.rule_no}]], [[${policy.activation}]])"
+	                                value="1">
+	                            <img id="activationImage-[[${policy.rule_no}]]"
+	                                 th:src="${policy.activation == 0 ? '/img/off.png' : '/img/on.png'}" width="40"
+	                                 height="20">
+	                        </button>
+	                    </td>
+	                    <form th:action="@{/modify}" method="post">
+	                        <td th:text="${policy.rule_no}" name="rule_no"></td>
+	                        <td th:text="${policy.from_ip}" name="from_ip"></td>
+	                        <td th:text="${policy.to_ip}" name="to_ip"></td>
+	                        <td th:text="${policy.port}" name="port"></td>
+	                        <td th:text="${policy.txt1}" name="txt1"></td>
+	                        <td th:text="${policy.txt2}" name="txt2"></td>
+	                        <td th:text="${policy.txt3}" name="txt3"></td>
+	                        <td th:text="${policy.base_cnt}" name="base_cnt"></td>
+	                        <td th:text="${policy.base_sec}" name="base_sec"></td>
+	                        <td th:text="${policy.policy_name}" name="policy_name"></td>
+	                        <td th:text="${policy.policy_info}" name="policy_info"></td>
+	                        <td th:text="${policy.rule_type}" name="rule_type"></td>
+	                        <td th:text="${policy.action_type}" name="action_type"></td>
+	                        <td th:text="${policy.create_date}" name="create_date"></td>
+	                        <td th:text="${policy.modify_date}" name="modify_date"></td>
+	                        <td><input type="submit" th:formaction="@{'modify/' + ${policy.rule_no}}" value="수정"></td>
+	                    </form>
+	                </tr>
+	            </tbody>
+	        </table>
+	        <a href="/insertPolicy" class="add-policy-link">정책 추가</a>
+	    </div>
+	</div>
+	
+	<!-- 모달 다이얼로그 -->
+	<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="searchModalLabel">정책 검색 조건 입력</h5>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div class="modal-body">
+	                <form method="get" action="/search_policy" id="logForm">
+	                    <div class="row g-3">
+	                        <!-- 기존 폼 필드들 -->
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="activation">Activation</label>
+	                                <input type="number" id="activation" name="activation" class="form-control" placeholder="1: 활성화, 0: 비활성화">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="rule_no">Rule No</label>
+	                                <input type="text" id="rule_no" name="rule_no" class="form-control">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="from_ip">From IP</label>
+	                                <input type="text" id="from_ip" name="from_ip" class="form-control">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="to_ip">To IP</label>
+	                                <input type="text" id="to_ip" name="to_ip" class="form-control">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="port">Port</label>
+	                                <input type="number" id="port" name="port" class="form-control">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="txt1">Txt1</label>
+	                                <input type="text" id="txt1" name="txt1" class="form-control">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="txt2">Txt2</label>
+	                                <input type="text" id="txt2" name="txt2" class="form-control">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="txt3">Txt3</label>
+	                                <input type="text" id="txt3" name="txt3" class="form-control">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="base_cnt">Base Count</label>
+	                                <input type="number" id="base_cnt" name="base_cnt" class="form-control">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="base_sec">Base Sec</label>
+	                                <input type="number" id="base_sec" name="base_sec" class="form-control">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="policy_name">Policy Name</label>
+	                                <input type="text" id="policy_name" name="policy_name" class="form-control">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="policy_info">Policy Info</label>
+	                                <input type="text" id="policy_info" name="policy_info" class="form-control">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="rule_type">Rule Type</label>
+	                                <input type="number" id="rule_type" name="rule_type" class="form-control" placeholder="0: 패턴, 1: 행동">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="action_type">Action Type</label>
+	                                <input type="number" id="action_type" name="action_type" class="form-control">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="from_create_date">From Create Date</label>
+	                                <input type="datetime-local" id="from_create_date" name="from_create_date" class="form-control">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="to_create_date">To Create Date</label>
+	                                <input type="datetime-local" id="to_create_date" name="to_create_date" class="form-control">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="from_modify_date">From Modify Date</label>
+	                                <input type="datetime-local" id="from_modify_date" name="from_modify_date" class="form-control">
+	                            </div>
+	                        </div>
+
+	                        <div class="col-md-6">
+	                            <div class="form-group">
+	                                <label for="to_modify_date">To Modify Date</label>
+	                                <input type="datetime-local" id="to_modify_date" name="to_modify_date" class="form-control">
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="mt-3">
+	                        <button type="submit" class="btn btn-primary">
+	                            <i class="fas fa-search"></i> 조회
+	                        </button>
+	                        <button type="button" class="btn btn-secondary" onclick="resetForm()">
+	                            <i class="fas fa-undo"></i> 초기화
+	                        </button>
+	                    </div>
+	                </form>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+	
+	
+	
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+            <script>
+                /*// 비동기 삭제
+                function delete_policy(event, rule_no) {
+                    event.preventDefault();
+    
+                    $.ajax({
+                        type: 'POST'
+                        , url: '/delete_policy'
+                        , contentType: 'application/json'
+                        , data: JSON.stringify({ rule_no:rule_no })
+                        , success: function () {
+                            if (confirm("변경 하시겠습니까?")) {
+                                let del_pol = event.target.parentNode.parentNode;
+                                del_pol.remove();
+                                let but = event.target.parentNode;
+                            	
+                                alert("변경 되었습니다.");
+                            }
+                        }
+                        , error: function (xhr, status, error) {
+                            console.log('Error: ', error);
+                        }
+                    })
+                }*/
+
+                function update_activation(event, rule_no, activation) {
+                    event.preventDefault();
+
+                    if (confirm("변경 하시겠습니까?")) {
+                        $.ajax({
+                            type: 'POST'
+                            , url: '/update_activation'
+                            , contentType: 'application/json'
+                            , data: JSON.stringify({ rule_no: rule_no })
+                            , success: function () {
+
+                                let target = event.target;
+                                console.log(target);
+
+                                if (target.value == 1) {
+                                    target.src = '/img/off.png';
+                                    target.value = 0;
+                                } else {
+                                    target.src = '/img/on.png';
+                                    target.value = 1;
+                                }
+
+                                alert("변경 되었습니다.");
+
+                            }
+                            , error: function (xhr, status, error) {
+                                console.log('Error: ', error);
+                            }
+                        })
+
+                    }
+                }
+
+            </script>
+
+            <script>
+                function resetForm() {
+                    document.getElementById("logForm").reset();
+                    window.location.href = '/policyManager';
+                }
+            </script>
+
+</body>
+
+</html>

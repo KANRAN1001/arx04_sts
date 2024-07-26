@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{layout/header :: header}"></head>
+
+<body>
+	<nav th:replace="~{/layout/body :: navigation}"></nav>
+	<div th:replace="~{/layout/body :: sidebar}"></div>	
+	
+	
+        <div id="layoutSidenav_content">
+         <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">유저 수정</h1>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            유저 수정 페이지
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <!--<div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            정책 
+                        </div>-->
+                        <div class="card-body">
+							<div class="centerASD">
+									<form action="/modifyUser" method="get"> 				
+										<table> 
+											<thead>
+												<tr>
+													<th>유정</th>
+													<th>내용</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>사용자 아이디</td>
+													<td><input type="text" name="user_id" th:value="${user_id}"></td>
+													
+												</tr>
+													
+												<tr>
+													<td>로그인 아이디</td>
+													<td><input type="text" name="login_id" th:value="${login_id}"> </td>
+												</tr>
+												<tr>
+													<td>패스워드</td>
+													<td><input type="password" name="password" th:value="${password}"></td>
+												<tr>
+
+												
+												<tr>
+													<td>사용자이름</td>
+													<td><input type="text" name="user_name" th:value="${user_name}"></td>
+												</tr>
+												
+												
+												<tr>
+													<td>사용자권한</td>
+													<td><input type="text" name="user_privilege" th:value="${user_privilege}"></td>
+												</tr>
+																  
+											</tbody>
+											<tfoot>
+												 <input type="submit" value="유저 수정">	
+											</tfoot>
+										</table>
+										</form>
+										
+							</div>
+                        </div>
+                    </div>
+
+                </div>
+				</main>
+        </div>
+   
+	<script th:replace="~{/layout/js :: js1}"></script>
+	<script th:replace="~{/layout/js :: js2}"></script>
+	<script th:replace="~{/layout/js :: js3}"></script>
+	<script th:replace="~{/layout/js :: js4}"></script>
+	<script th:replace="~{/layout/js :: js5}"></script>
+	<script th:replace="~{/layout/js :: js6}"></script>
+	<script th:replace="~{/layout/js :: js7}"></script>
+	<script th:replace="~{/layout/js :: js8}"></script>
+</body>
+
+</html>

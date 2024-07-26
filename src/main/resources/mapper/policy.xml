@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 이 xml파일은 namespace에 지정한 mapper 인터페이스와 연동하여 SQL을 설정할 것이다. 라고 선언한 것-->
+<mapper namespace="com.example.demo.dao.PolicyDao">
+
+	<!-- 정책을 전부 반환 해주는 쿼리문 -->
+	<select id="getAllPolicy" resultType="com.example.demo.dto.Policy">
+		SELECT *
+		FROM policy_ips_rules
+	</select>
+	<!-- 해당 rule_no의 정보를 반환해주는 쿼리문 -->
+	<select id="getPolicy" resultType="com.example.demo.dto.Policy" parameterType="String">
+		SELECT *
+		FROM policy_ips_rules
+		WHERE rule_no = #{rule_no}
+	</select>
+	
+	<!-- 정책추가 쿼리문  -->
+	<insert id="addPolicy" parameterType="com.example.demo.dto.Policy"> 
+		    insert into policy_ips_rules
+    (
+        <if test="activation != null">activation,</if>
+        <if test="rule_no != null">rule_no,</if>
+        <if test="from_ip != null">from_ip,</if>
+        <if test="to_ip != null">to_ip,</if>
+        <if test="port != null">port,</if>
+        <if test="txt1 != null">txt1,</if>
+        <if test="txt2 != null">txt2,</if>
+        <if test="txt3 != null">txt3,</if>
+        <if test="base_cnt != null">base_cnt,</if>
+        <if test="base_sec != null">base_sec,</if>
+        <if test="policy_name != null">policy_name,</if>
+        <if test="policy_info != null">policy_info,</if>
+        <if test="rule_type != null">rule_type,</if>
+        <if test="action_type != null">action_type,</if>
+        create_date, modify_date
+    ) 
+    values 
+    (
+        <if test="activation != null">#{activation},</if>
+        <if test="rule_no != null">#{rule_no},</if>
+        <if test="from_ip != null">#{from_ip},</if>
+        <if test="to_ip != null">#{to_ip},</if>
+        <if test="port != null">#{port},</if>
+        <if test="txt1 != null">#{txt1},</if>
+        <if test="txt2 != null">#{txt2},</if>
+        <if test="txt3 != null">#{txt3},</if>
+        <if test="base_cnt != null">#{base_cnt},</if>
+        <if test="base_sec != null">#{base_sec},</if>
+        <if test="policy_name != null">#{policy_name},</if>
+        <if test="policy_info != null">#{policy_info},</if>
+        <if test="rule_type != null">#{rule_type},</if>
+        <if test="action_type != null">#{action_type},</if>
+        now(), now()
+    )
+	</insert>
+	
+	<!-- 정책 수정 쿼리문 -->
+	<update id="updatePolicy" parameterType="com.example.demo.dto.Policy">
+    UPDATE policy_ips_rules
+    <set>
+        <if test="from_ip != null">
+            from_ip = #{from_ip},
+        </if>
+        <if test="to_ip != null">
+            to_ip = #{to_ip},
+        </if>
+        <if test="port != null">
+            port = #{port},
+        </if>
+        <if test="txt1 != null">
+            txt1 = #{txt1},
+        </if>
+        <if test="txt2 != null">
+            txt2 = #{txt2},
+        </if>
+        <if test="txt3 != null">
+            txt3 = #{txt3},
+        </if>
+        <if test="base_cnt != null">
+            base_cnt = #{base_cnt},
+        </if>
+        <if test="base_sec != null">
+            base_sec = #{base_sec},
+        </if>
+        <if test="policy_name != null">
+            policy_name = #{policy_name},
+        </if>
+        <if test="policy_info != null">
+            policy_info = #{policy_info},
+        </if>
+        <if test="rule_type != null">
+            rule_type = #{rule_type},
+        </if>
+        <if test="action_type != null">
+            action_type = #{action_type},
+        </if>
+        <if test="activation != null">
+            activation = #{activation},
+        </if>
+        modify_date = now()
+    </set>
+    WHERE rule_no = #{rule_no}
+</update>
+
+	<!-- 특정 rule_no의 정책을 삭제하는 쿼리문 -->
+	<delete id="deletePolicy" parameterType="String"> 
+	DELETE FROM policy_ips_rules
+	WHERE rule_no = #{rule_no}
+	</delete>
+	
+	<!-- 활성화 및 비활성화 쿼리문 -->
+	<update id="updateActivation" parameterType="String"> 
+	UPDATE policy_ips_rules
+	SET activation = CASE
+    WHEN activation = 0 THEN 1
+    WHEN activation = 1 THEN 0
+	END
+	WHERE rule_no = #{rule_no}
+	</update>
+	
+	<!-- 검색 쿼리문 -->
+	    <select id="searchPolicy" resultType="com.example.demo.dto.Policy">
+        SELECT *
+        FROM policy_ips_rules
+        <where>
+            <if test="activation != null and activation != ''">
+               AND activation = #{activation}
+            </if>
+            <if test="rule_no != null and rule_no != ''">
+                AND rule_no = #{rule_no}
+            </if>
+             <if test="from_ip != null and from_ip != ''" >
+                AND from_ip = #{from_ip}
+            </if>
+            <if test="to_ip != null and to_ip != ''">
+                AND to_ip = #{to_ip}
+            </if>
+            <if test="port != null and port != ''">
+                AND port = #{port}
+            </if>            
+            <if test="txt1 != null and txt1 != ''">
+                AND txt1 = #{txt1}
+            </if>            
+            <if test="txt2 != null and txt2 != ''">
+                AND txt2 = #{txt2}
+            </if>            
+             <if test="txt3 != null and txt3 != ''">
+                AND txt3 = #{txt3}
+            </if>           
+            <if test="base_cnt != null and base_cnt != ''">
+                AND base_cnt = #{base_cnt}
+            </if>     
+            <if test="base_sec != null and base_sec != ''">
+                AND base_sec = #{base_sec}
+            </if>                     
+             <if test="policy_name != null  and policy_name != ''" >
+                AND policy_name = #{policy_name}
+            </if>           
+             <if test="policy_info != null and policy_info != ''">
+                AND policy_info = #{policy_info}
+            </if>
+             <if test="rule_type != null and rule_type != ''">
+                AND rule_type = #{rule_type}
+            </if>                           
+             <if test="action_type != null and action_type != ''">
+                AND action_type = #{action_type}
+            </if>                             
+             <if test="from_create_date != null and from_create_date != ''">
+                AND create_date BETWEEN #{from_create_date} AND #{to_create_date}
+            </if>    
+                       
+             <if test="from_modify_date != null and from_modify_date != ''">
+                AND modify_date BETWEEN #{from_modify_date} AND #{to_modify_date}
+            </if>
+            
+                         
+        </where>
+    </select>
+	
+	
+</mapper>
