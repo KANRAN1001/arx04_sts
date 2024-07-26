@@ -39,7 +39,6 @@
                         <i class="fas fa-table me-1"></i>
                         오늘 감지된 로그
                     </div>
-                    <div class="card-body">
                         <table id="datatablesSimple" class="table table-bordered">
                             <thead>
                                 <tr>
@@ -67,12 +66,11 @@
                                     <td th:text="${log.violation_time}"></td>
                                     <td th:text="${log.violation_cnt}"></td>
                                     <td>
-                                        <a th:href="@{/LogDetail(payload=${log.payloadHex})}" class="btn btn-primary">상세 페이지로 이동</a>
+                                        <a th:href="@{/LogDetail(payload=${log.payloadHex})}" class="btn btn-primary"> <i class="fas fa-search"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
                 </div>
 			</div>
 		</main>
@@ -179,7 +177,7 @@
 
     <!-- Bootstrap JS -->
 	
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
