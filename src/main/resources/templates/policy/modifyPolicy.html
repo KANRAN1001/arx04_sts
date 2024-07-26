@@ -4,16 +4,19 @@
 <head th:insert="~{layout/header :: header}"></head>
 
 <body>
-	<!--navigation-->
-	<div th:replace="~{/layout/body :: navigation}"></div>	
-	<!-- sidebar-->
-	<div th:replace="~{/layout/body :: sidebar}"></div>	
-	
-        <div class="container">
+	<div class="container-fluid">
+	    <div class="row">	
+		<!-- sidebar-->
+		<nav th:replace="~{/layout/body :: sidebar}"></nav>	
 
-                    <div class="card mb-4">
+		<!-- Main Content -->
+		<main role="main" class="col-md-10 ml-sm-auto px-4">
+		    <h1 class="my-4">대시보드</h1>
+			<div class="row">
+				
+<!--                    <div class="card mb-4">
                         <div class="card-body">
-							<div class="centerASD">
+							<div class="centerASD">-->
 									<form action="/modify" method="get"> 				
 										<table> 
 											<thead>
@@ -82,13 +85,14 @@
 											</tfoot>
 										</table>
 										
-							</div>
+<!--							</div>
                         </div>
-                    </div>
+                    </div>-->
 
                 </div>
 				</main>
         </div>
+	</div>
 
 
 </body>

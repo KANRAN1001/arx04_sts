@@ -3,40 +3,93 @@
 
 <head th:insert="~{layout/header :: header}"></head>
 
-	<!--navigation-->
-	<div th:replace="~{/layout/body :: navigation}"></div>	
-	<!-- sidebar-->
-	<div th:replace="~{/layout/body :: sidebar}"></div>	
+<body>
+	<div class="container-fluid">
+	    <div class="row">	
+		<!-- sidebar-->
+		<nav th:replace="~{/layout/body :: sidebar}"></nav>	
+		
+		<!-- Main Content -->
+		<main role="main" class="col-md-10 ml-sm-auto px-4">
+		    <h1 class="my-4">대시보드</h1>
+			<div class="row">
+				
+				<div class="row">
+				    <!-- Line Chart -->
+				    <div class="col-md-12">
+				        <div class="chart-container">
+				            <canvas id="myChart3"></canvas>
+				        </div>
+				    </div>
+				</div>
+				
+				<div class="row mt-4">
+				    <!-- Pie Charts -->
+				    <div class="col-md-4">
+				        <div class="chart-container">
+				            <canvas id="myChart1"></canvas>
+				        </div>
+				    </div>
+				    <div class="col-md-4">
+				        <div class="chart-container">
+				            <canvas id="myChart2"></canvas>
+				        </div>
+				    </div>
+				    <div class="col-md-4">
+				        <div class="chart-container">
+				            <canvas id="myChart4"></canvas>
+				        </div>
+				    </div>
+				</div>			
+					
+				<div class="row mt-4">
+				    <!-- Table -->
+				    <div class="col-md-12 table-container">				
+						<table class="table table-striped">		
+							<caption>최근 로깅 5건</caption>
+							<thead>
+								<tr>
+									<th>타입</th>
+									<th>정책번호</th>
+									<th>도착 IP</th>
+									<th>로깅 시간</th>
+									<th>Payload</th>
+								</tr>
+							</thead>	
+							<tbody>
+								<tr th:each="loggingTable, iterstat : ${loggingTable}">
+									<td th:text="${loggingTable.type}"> </td>
+									<td th:text="${loggingTable.rule_no}"> </td>
+									<td th:text="${loggingTable.src_ip}"> </td>
+									<td th:text="${loggingTable.time_stamp}"> </td>
+									<td>조회 </td>
+								</tr>
+							</tbody>
+						</table>	
+	                </div>
+	            </div>
+	        </main>
+	    </div>
+	</div>													
 
-	<div class="container">
-		<div class="chartbox3">
-			<span>주간 로깅 통계</span>
-		    <div class="myChart3"><canvas id="myChart3" width="1250px" height="200px"></canvas></div>
-		</div>
 	
-  		<fieldset class="pattern_count_box">
+<!--  		<fieldset class="pattern_count_box">
   			<legend><span>패턴</span></legend>
   			<span th:text="${today_pattern_count}"></span> 건
   		</fieldset>
-
-		<div class="chartbox1">
+-->
+<!--		<div class="chartbox1">
   			<canvas id="myChart1"></canvas>
  	 	</div>	
   
   		<fieldset class="behavior_count_box">
  		 	<legend><span>행동</span></legend>
   			<span th:text="${today_behavior_count}"></span> 건
-		</fieldset>
+		</fieldset>-->
   
- 		<div class="chartbox2">
-  			<canvas id="myChart2"></canvas>
-		</div>	
+
   
-		<div class="chartbox4">
-  			<canvas id="myChart4"></canvas>
-		</div>
-  
-		<table border="1" class="logging-table">
+<!--		<table border="1" class="logging-table">
 			<caption>최근 로깅 5건</caption>
 			<thead>
 			<tr>
@@ -56,9 +109,13 @@
 				<td>조회 </td>
 			</tr>
   	</table>
-  <div>
+  <div>-->
 	
-	
+	<!-- Bootstrap JS and dependencies -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<!-- Chart.js JS -->
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>	
 	<!-- week log chart -->
@@ -68,7 +125,6 @@
 	<!-- daily pattern log chart-->
 	<script th:replace="~{/js/TodayPatternChart :: TodayPatternChart}">	</script>
 	<!--ip log chart -->
-	<script th:replace="~{/js/ipLogChart :: ipLogChart}">	</script>
-			
+	<script th:replace="~{/js/ipLogChart :: ipLogChart}">	</script>			
 </body>
 </html>

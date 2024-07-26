@@ -13,7 +13,7 @@
 	</nav>
 </div>
 <!-- sidebar fragment -->
- <div th:fragment="sidebar" class="sidebar">
+<!-- <div th:fragment="sidebar" class="sidebar">
  	<ul class="sidebar-container">
  		<li > <a href="/dashboard"> Main </a></li>
  		<li>  <a href="/Log"> 로그관리 </a></liclass="nav-item">
@@ -21,5 +21,26 @@
  		<li > <a href="/userManager"> 유저관리 </a></li>
  		<li > <a href="#"> 생광좀</a></li>
 	 </ul>
-</div>
-		
+</div>-->
+
+
+<nav class="col-md-2 sidebar" th:fragment="sidebar">
+    <div class="sidebar-header">
+        <h4 class="text-center">ARX04</h4>
+        <p class="text-center">프로젝트 명</p>
+    </div>
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link active" href="/dashboard">Main</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Log">로그관리</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/policyManager">정책관리</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/userManager">유저관리</a>
+        </li>
+    </ul>
+</nav>		

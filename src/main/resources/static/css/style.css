@@ -1,34 +1,34 @@
-body {
+/*body {
 	background-color:#eee;
 }
 
 * {
 	padding: 0;
 	margin: 0;
-	text-decoration: none;		/*밑줄*/
-	list-style: none;			/*기호 없애기*/
+	text-decoration: none;		밑줄
+	list-style: none;			기호 없애기
 }
 
-/* navigation bar*/
+ navigation bar
 nav {
 	background-color: #34495e;
 	width: 100%;
 	height: 80px;
-/*	position: fixed; */
+	position: fixed; 
 	top: 0;
 }
 
 nav li {
-	display: inline-block;		/* 인라인 블록요소를 사용해 가로로 배치 가능  제일 중요한 느낌임!!!*/
-	margin: 0 8px; /*상하 , 좌우 */
-	line-height: 80px; /*줄 간격*/
+	display: inline-block;		 인라인 블록요소를 사용해 가로로 배치 가능  제일 중요한 느낌임!!!
+	margin: 0 8px; 상하 , 좌우 
+	line-height: 80px; 줄 간격
 }
 
 nav a {
 	color: white;
 	font-size: 20px;
-	text-transform: uppercase;  /*모두 대문자*/
-	padding: 10px; /*안쪽여백*/
+	text-transform: uppercase;  모두 대문자
+	padding: 10px; 안쪽여백
 }
 
 a.active
@@ -36,7 +36,7 @@ a.active
 	border: 1px solid white;
 }
 
-/* sidebar */
+ sidebar 
 .sidebar {
 	width: 150px;
 	background-color: #eee;
@@ -58,7 +58,7 @@ sidebar-container li a{
 }
 
 
-/* dashboard */
+ dashboard 
 .container {
 	width: 1300px;
 	height: 800px;
@@ -159,11 +159,43 @@ sidebar-container li a{
 	text-align: center;
 }
 
-/* policyManager*/
+ policyManager
 
 .policy-table {
 	float: left;
 	text-align: center;
 	border: 1px solid black;
 	font-size: 12px;
+}
+*/
+
+
+body {
+    margin: 0;
+    background-color: #f8f9fa;
+}
+.sidebar {
+    height: 100vh; /* Full viewport height */
+    background-color: #343a40; /* Sidebar background color */
+    color: #ffffff; /* Text color */
+    position: fixed; /* Fixed position */
+    top: 0;
+    left: 0;
+    width: 250px; /* Set a fixed width for sidebar */
+    overflow-y: auto; /* Scrollbar */
+    padding-top: 20px; /* Padding at the top */
+}
+.sidebar a {
+    color: #ffffff;
+}
+.sidebar a:hover {
+    background-color: #495057;
+}
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+.table-container {
+    margin-top: 30px;
 }
