@@ -1,13 +1,11 @@
-<script th:inline="javascript" th:fragment="TodayBehaviorChart">
+<script th:inline="javascript" th:fragment="dailyBehaviorChart">
 		
-		var b_count_list = [[${behavior}]];
-		var b_rule = b_count_list.map(function(data){return data.rule_no});
-		var b_count = b_count_list.map(function(data) {return data.count});
-		
-		console.log(b_count_list);
+		var daily_behavior = [[${behavior}]];
+		var b_rule = daily_behavior.map(function(data){return data.rule_no});
+		var b_count = daily_behavior.map(function(data) {return data.count});
 
 		
-		const ctx2 = document.getElementById('myChart2');
+		const ctx2 = document.getElementById('dailyBehaviorChart');
 						new Chart(ctx2, {
 						    type: 'pie',
 						    data: {

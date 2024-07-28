@@ -10,4 +10,9 @@ import lombok.Data;
 public class Pattern {
 	private String rule_no;		// 패턴기반 정책 번호
 	private int count;		// 패턴기반 탐지 횟수
+	
+	public Pattern(String rule_no, int count) {
+        this.rule_no = rule_no;
+        this.count = count;
+	}
 }

@@ -8,7 +8,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.DashboardDao;
-import com.example.demo.dto.Policy;
 import com.example.demo.dto.dashboard.Behavior;
 import com.example.demo.dto.dashboard.Detection;
 import com.example.demo.dto.dashboard.IpLog;
@@ -30,6 +29,11 @@ public class DashboardService {
 		this.dashboardDao = dashboardDao;
 	}
 	
+	// 최근 7일간의 테이블 네임을 가져오는 쿼리 테이블이 있을경우
+	public List<String> getWeekTable() {
+		return dashboardDao.getWeekTable();
+	}
+	
 	/*
 	 * 당일 행동 및 패턴기반 탐지 횟수를 List로 반환해주는 서비스 메서드
 	 * @param  : String today 쿼리문에 동적으로 테이블을 조회할 수 있게 해주는 역할
@@ -45,11 +49,19 @@ public class DashboardService {
 	 * @return : List<Behavior> 리스트 형식으로 행동기반 탐지 정책번호와 횟수를 반환
 	 */ 
 	public List<Behavior> getTodayBehaviorCount(String today) {
-		return dashboardDao.getTodayBehaviorCount(today);
+		List<Behavior> behavior = dashboardDao.getTodayBehaviorCount(today);
+		if ( behavior.isEmpty()) {
+			behavior.add(new Behavior("0", 0));
+		}	
+		return behavior;
 	}
 	
 	public List<Pattern> getTodayPatternCount(String today) {
-		return dashboardDao.getTodayPatternCount(today);
+		 List<Pattern> pattern =  dashboardDao.getTodayPatternCount(today);
+		 if ( pattern.isEmpty()) {
+			 pattern.add(new Pattern("0",0));
+		 }
+		 return pattern;
 	}
 	
 	/*

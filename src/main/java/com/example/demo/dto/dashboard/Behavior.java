@@ -10,4 +10,9 @@ import lombok.Data;
 public class Behavior {
 	private String rule_no;		// 행동기반 정책 번호
 	private int count;			// 행동기반 탐지 횟수
+	
+    public Behavior(String rule_no, int count) {
+        this.rule_no = rule_no;
+        this.count = count;
+    }
 }

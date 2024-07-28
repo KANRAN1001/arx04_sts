@@ -1,12 +1,12 @@
-<script th:inline="javascript" th:fragment="weekchart">
+<script th:inline="javascript" th:fragment="dailyPatternChart">
 		
-		var p_count_list = [[${pattern}]];
-		var p_rule =  p_count_list.map(function(data){return data.rule_no});
-		var p_count =  p_count_list.map(function(data) {return data.count});
+		var daily_pattern = [[${pattern}]];
+		var p_rule =  daily_pattern.map(function(data){return data.rule_no});
+		var p_count =  daily_pattern.map(function(data) {return data.count});
 		
 
 		
-		const ctx1 = document.getElementById('myChart1');
+		const ctx1 = document.getElementById('dailyPatternChart');
 						new Chart(ctx1, {
 						    type: 'pie',
 						    data: {

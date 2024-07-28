@@ -1,17 +1,17 @@
-<script th:inline="javascript" th:fragment="ipLogChart">
-	var iplog = [[${ipLogging}]];
-	var type4 = iplog.map(function(data){return data.src_ip});
-	var count4 = iplog.map(function(data) {return data.count});
+<script th:inline="javascript" th:fragment="dailyIpChart">
+	var daily_ip = [[${ipLogging}]];
+	var ip = daily_ip.map(function(data){return data.src_ip});
+	var count = daily_ip.map(function(data) {return data.count});
 
 	
-	const ctx4 = document.getElementById('myChart4');
+	const ctx4 = document.getElementById('dailyIpChart');
 	new Chart(ctx4, {
 	    type: 'pie',
 	    data: {
-	      labels: type4, 
+	      labels: ip, 
 	      datasets: [{
 	        label: '# of Votes',
-	        data: count4 ,
+	        data: count ,
 	        borderWidth: 1,
 			backgroundColor: ['rgba(255,99,132,0.2)', 'rgba(54,162,235,0.2)' ],
 			borderdColor: ['rgba(255,99,132,0.2)', 'rgba(54,162,235,0.2)' ]

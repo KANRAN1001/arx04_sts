@@ -21,6 +21,9 @@ import com.example.demo.dto.dashboard.Week;
 @Mapper
 public interface DashboardDao {
 
+	// 최근 7일간의 테이블 네임을 가져오는 쿼리 테이블이 있을경우
+	public List<String> getWeekTable();
+	
 	/*
 	 * 당일 행동 및 패턴기반  탐지 횟수를 List로 반환해주는 인터페이스
 	 * @param  : String today 쿼리문에 동적으로 테이블을 조회할 수 있게 해주는 역할

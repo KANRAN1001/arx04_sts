@@ -1,13 +1,13 @@
-<script th:inline="javascript" th:fragment="TodayPatternChart">
-	var list3 = [[${b_date}]];
-	var type3 = list3.map(function(data){return data.date});
-	var count3 = list3.map(function(data) {return data.count});
+<script th:inline="javascript" th:fragment="weekLineChart">
+	var week_behavior = [[${week_behavior}]];
+	var type3 = week_behavior.map(function(data){return data.date});
+	var count3 = week_behavior.map(function(data) {return data.count});
 	
-	var list4 = [[${p_date}]];
-	var type4 = list4.map(function(data){return data.date});
-	var count4 = list4.map(function(data){return data.count});
+	var week_pattern = [[${week_pattern}]];
+	var type4 = week_pattern.map(function(data){return data.date});
+	var count4 = week_pattern.map(function(data){return data.count});
 	
-	const ctx3 = document.getElementById('myChart3');
+	const ctx3 = document.getElementById('weekLineChart');
 					new Chart(ctx3, {
 						  type: 'line',
 						  data: {

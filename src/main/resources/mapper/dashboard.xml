@@ -4,6 +4,28 @@
 <!-- Mapper 인터페이스인 DashboardDao와 연동 설정 한것  -->
 <mapper namespace="com.example.demo.dao.DashboardDao">
 	
+	<!-- getWeekTable // 테이블이 있는경우 오늘 날짜기준으로 7일치를 가져오는 쿼리문-->
+	<select id="getWeekTable" resultType="String" > 
+	  SELECT table_name 
+  	  FROM information_schema.tables 
+  	  WHERE table_name LIKE 'ips_log_%' order by table_name desc limit 7;
+	</select>
+	
+	<!-- 20240726 고쳐야함 -->
+	<!-- getWeekBehaviorCount() 인터페이스와 연동되는 쿼리문 / 일주일간의 행동기반 탐지 횟수를 반환  -->
+	<select id="getWeekBehaviorCount" resultType="com.example.demo.dto.dashboard.Week" parameterType="java.util.List">
+		<foreach item="date" collection="list" separator="UNION ALL"> 
+			select '${date}' as date , count(*) as count from ips_log_${date} where type = "BEHAVIOR"
+		</foreach> 
+	</select>
+	
+	<!-- getWeekPatternCount() 인터페이스와 연동되는 쿼리문 / 일주일간의 패턴기반 탐지 횟수를 반환  -->
+	<select id="getWeekPatternCount" resultType="com.example.demo.dto.dashboard.Week" parameterType="java.util.List">
+		<foreach item="date" collection="list" separator="UNION ALL"> 
+			select '${date}' as date , count(*) as count from ips_log_${date} where type = "PATTERN"
+		</foreach> 
+	</select>
+	
 	<!-- getTodayDetectionsCount() 인터페이스와 연동되는 쿼리문 / 당일 행동 및 패턴기반 탐지 횟수를 반환  -->
 	<select id="getTodayDetectionsCount" resultType="com.example.demo.dto.dashboard.Detection" parameterType="String">
 		select type ,count(*) AS count from ips_log_${today} group by type;
@@ -19,19 +41,7 @@
 		select rule_no, count(*) as count from ips_log_${today} where type = "PATTERN" group by rule_no;
 	</select>
 	
-	<!-- getWeekBehaviorCount() 인터페이스와 연동되는 쿼리문 / 일주일간의 행동기반 탐지 횟수를 반환  -->
-	<select id="getWeekBehaviorCount" resultType="com.example.demo.dto.dashboard.Week" parameterType="java.util.List">
-		<foreach item="date" collection="list" separator="UNION ALL"> 
-			select '${date}' as date , count(*) as count from ips_log_${date} where type = "BEHAVIOR"
-		</foreach> 
-	</select>
-	
-	<!-- getWeekPatternCount() 인터페이스와 연동되는 쿼리문 / 일주일간의 패턴기반 탐지 횟수를 반환  -->
-	<select id="getWeekPatternCount" resultType="com.example.demo.dto.dashboard.Week" parameterType="java.util.List">
-		<foreach item="date" collection="list" separator="UNION ALL"> 
-			select '${date}' as date , count(*) as count from ips_log_${date} where type = "PATTERN"
-		</foreach> 
-	</select>
+
 	
 	<!-- getWeekLogging() 인터페이스와 연동되는 쿼리문 / 최근 5건의 로깅건을 반환-->
 	<select id="getWeekLogging" resultType="com.example.demo.dto.dashboard.LoggingTable" parameterType="String"> 

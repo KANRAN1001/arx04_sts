@@ -20,7 +20,7 @@
 				      <i class="fas fa-calendar-week"></i>
 						<div class="card-header">
 <!--							<h5>주간 로깅 통계</h5>-->
-				            <canvas id="myChart3" width="800px" height="150px"></canvas>
+				            <canvas id="weekLineChart" width="800px" height="150px"></canvas>
 				        </div>
 <!--				    </div>-->
 				</div>
@@ -30,17 +30,17 @@
 				    <div class="col-md-4">
 
 				        <div class="chart-container">
-				            <canvas id="myChart1"></canvas>
+				            <canvas id="dailyPatternChart"></canvas>
 				        </div>
 				    </div>
 				    <div class="col-md-4">
 				        <div class="chart-container">
-				            <canvas id="myChart2"></canvas>
+				            <canvas id="dailyBehaviorChart"></canvas>
 				        </div>
 				    </div>
 				    <div class="col-md-4">
 				        <div class="chart-container">
-				            <canvas id="myChart4"></canvas>
+				            <canvas id="dailyIpChart"></canvas>
 				        </div>
 				    </div>
 				</div>			
@@ -74,45 +74,6 @@
 	        </main>
 	    </div>
 	</div>													
-
-	
-<!--  		<fieldset class="pattern_count_box">
-  			<legend><span>패턴</span></legend>
-  			<span th:text="${today_pattern_count}"></span> 건
-  		</fieldset>
--->
-<!--		<div class="chartbox1">
-  			<canvas id="myChart1"></canvas>
- 	 	</div>	
-  
-  		<fieldset class="behavior_count_box">
- 		 	<legend><span>행동</span></legend>
-  			<span th:text="${today_behavior_count}"></span> 건
-		</fieldset>-->
-  
-
-  
-<!--		<table border="1" class="logging-table">
-			<caption>최근 로깅 5건</caption>
-			<thead>
-			<tr>
-				<th>타입</th>
-				<th>정책번호</th>
-				<th>도착 IP</th>
-				<th>로깅 시간</th>
-				<th>Payload</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="loggingTable, iterstat : ${loggingTable}">
-				<td th:text="${loggingTable.type}"> </td>
-				<td th:text="${loggingTable.rule_no}"> </td>
-				<td th:text="${loggingTable.src_ip}"> </td>
-				<td th:text="${loggingTable.time_stamp}"> </td>
-				<td>조회 </td>
-			</tr>
-  	</table>
-  <div>-->
 	
 	<!-- Bootstrap JS and dependencies -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -122,12 +83,12 @@
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>	
 	<!-- week log chart -->
-	<script th:replace="~{/js/weekchart :: weekchart}"></script>
+	<script th:replace="~{/js/weekLineChart :: weekLineChart}"></script>
 	<!-- daily behavior log chart-->
-	<script th:replace="~{/js/TodayBehaviorChart :: TodayBehaviorChart}"></script>
+	<script th:replace="~{/js/dailyPatternChart :: dailyPatternChart}"></script>
 	<!-- daily pattern log chart-->
-	<script th:replace="~{/js/TodayPatternChart :: TodayPatternChart}">	</script>
+	<script th:replace="~{/js/dailyBehaviorChart :: dailyBehaviorChart}">	</script>
 	<!--ip log chart -->
-	<script th:replace="~{/js/ipLogChart :: ipLogChart}">	</script>			
+	<script th:replace="~{/js/dailyIpChart :: dailyIpChart}">	</script>			
 </body>
 </html>
