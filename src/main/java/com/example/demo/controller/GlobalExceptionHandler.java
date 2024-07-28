@@ -22,4 +22,5 @@ public class GlobalExceptionHandler {
     public String handleException() {
         return "error.html";
     }
+    
 }

@@ -52,6 +52,7 @@ public class DashboardService {
 		List<Behavior> behavior = dashboardDao.getTodayBehaviorCount(today);
 		if ( behavior.isEmpty()) {
 			behavior.add(new Behavior("0", 0));
+			System.out.println("이거 찍혀?" +  behavior);
 		}	
 		return behavior;
 	}

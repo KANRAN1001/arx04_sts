@@ -6,10 +6,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.demo.dto.dashboard.Behavior;
-import com.example.demo.dto.dashboard.Detection;
 import com.example.demo.dto.dashboard.IpLog;
 import com.example.demo.dto.dashboard.LoggingTable;
 import com.example.demo.dto.dashboard.Pattern;
@@ -80,7 +80,7 @@ public class DashboardController {
 		
 		// 당일 행동기반 로깅 갯수를 정책별로 model로 html로 넘겨줌
 		List<Behavior> behavior = dashboardService.getTodayBehaviorCount(today);
-			model.addAttribute("behavior", behavior);
+		model.addAttribute("behavior", behavior);
 
 		System.out.println("획안용: " + behavior);
 
@@ -115,5 +115,6 @@ public class DashboardController {
 
 		return "dashboard";
 	}
+	
 
 }

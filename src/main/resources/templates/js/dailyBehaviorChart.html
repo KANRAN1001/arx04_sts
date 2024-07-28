@@ -5,24 +5,30 @@
 		var b_count = daily_behavior.map(function(data) {return data.count});
 
 		
+		
+		
 		const ctx2 = document.getElementById('dailyBehaviorChart');
 						new Chart(ctx2, {
 						    type: 'pie',
 						    data: {
-						      labels: b_rule ,
 						      datasets: [{
 				//		        label: '# of Votes',
+								label: b_rule ,
 						        data: b_count,
 					//	        borderWidth: 1
 						      }]
 						    },
 						    options: {
-								indexAxis: 'y',
-						      scales: {
-						        y: {
-						          beginAtZero: true
-						        }
-						      }
+								plugins: {
+								    title: {
+								        display: true,
+								        text: 'Daily Behavior Chart',
+										font: {
+										    size: 12 // 제목의 글꼴 크기 설정
+										},
+								    }
+								},
+			//					indexAxis: 'y',
 							  }
 							  }
 							  )

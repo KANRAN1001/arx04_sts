@@ -10,9 +10,9 @@
 						new Chart(ctx1, {
 						    type: 'pie',
 						    data: {
-						      labels: p_rule, 
+
 						      datasets: [{
-						        label: '# of Votes',
+						        label: p_rule, 
 						        data: p_count ,
 						        borderWidth: 1,
 								backgroundColor: ['rgba(255,99,132,0.2)', 'rgba(54,162,235,0.2)' ],
@@ -21,12 +21,16 @@
 						    }, 
 
 						    options: {
-								indexAxis: 'y',
-						      scales: {
-						        y: {
-						          beginAtZero: true
-						        }
-						      }
+								plugins: {
+								    title: {
+								        display: true,
+								        text: 'Daily Pattern Chart',
+										font: {
+										    size: 12 // 제목의 글꼴 크기 설정
+										},
+								    }
+								},
+		//						indexAxis: 'y',
 							  }
 							  })
 		
