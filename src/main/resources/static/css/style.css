@@ -46,14 +46,28 @@ canvas {
 	background-color: #eceff1;
 }
 
-
-
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    white-space: nowrap; /* 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 내용 숨김 */
+    text-overflow: ellipsis; /* 넘치는 텍스트를 ...으로 표시 */
+    max-width: 150px; /* 필요한 경우 열의 최대 너비 설정 */
+	font-size: 10px;
+	text-align: center;
+}
+/*
 .table th, .table td {
     text-align: center;
     vertical-align: middle;
-    padding: 0.5rem; /* Adjust the padding for tighter spacing */
-    font-size: 0.875rem; /* Reduce the font size */
-}
+    padding: 0.5rem;  Adjust the padding for tighter spacing 
+    font-size: 0.875rem;  Reduce the font size 
+}*/
 /* 카드 스타일 */
 .card {
     margin-bottom: 1rem; /* 카드 하단 여백 조정 */
@@ -71,14 +85,19 @@ canvas {
 }
 
 .policy-table {
-    width: 100%; /* 테이블 너비를 카드에 맞게 조정 */
-    margin-bottom: 0; /* 테이블 하단 여백 제거 */
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: auto;
 }
 
-.policy-table th, .policy-table td {
-    padding: 0.75rem; /* 테이블 셀 패딩 조정 */
-    text-align: center; /* 텍스트 정렬을 중앙으로 조정 */
+.policy-table th, policy-table td {
+	border: 1px solid #ddd;
+	white-space: nowrap; /* 줄바꿈 방지 */
+	overflow: hidden; /* 넘치는 내용 숨김 */
+	text-overflow: ellipsis; /* 넘치는 텍스트를 ...으로 표시 */
 }
+
+
 
 .thead-dark th {
     background-color: #fff; /* 테이블 헤더 배경색 */
