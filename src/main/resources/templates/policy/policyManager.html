@@ -1,424 +1,447 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{layout/header :: header}"></head>
+<head th:insert="~{layout/head :: head}"></head>
 
 <body>
-	<div class="container-fluid">
-	    <div class="row">	
-		<!-- sidebar-->
-		<nav th:replace="~{/layout/body :: sidebar}"></nav>	
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed">
+        <!-- sidebar-->
+        <aside th:replace="~{/layout/body :: sidebar}"></aside>
 
-		<!-- Main Content -->
-		<main role="main" class="col-md-10 ml-sm-auto px-4">
-		    <h1 class="my-4">정책관리</h1>
-			<div class="row">
-			
-			<div class="card mb-4">
-			    <div class="card-header">
-			        <i class="fas fa-calendar-day me-1"></i>
-			        정책 조회
-			    </div>
-			    <div class="card-body">
-			        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#searchModal">
-			            <i class="fas fa-search"></i> 검색 조건 설정
-			        </button>
-			    </div>
-			</div>
-				
-	    <!-- 정책을 테이블 형식으로 보여줌 -->
-		<div class="card mb-4">
-		    <div class="card-header">
-		        <i class="fas fa-table me-1"></i>
-		        정책 목록
-		    </div>
-		    <div class="card-body">
-		        <div class="table-responsive">
-		            <table class="table table-bordered policy-table">
-		                <thead class="thead-dark">
-		                    <tr>
-		                        <th class="text-center">no</th>
-		                        <th class="text-center">activation</th>
-		                        <th class="text-center">정책번호</th>
-		                        <th class="text-center">FROM_IP</th>
-		                        <th class="text-center">TO_IP</th>
-		                        <th class="text-center">PORT</th>
-		                        <th class="text-center">TXT1</th>
-		                        <th class="text-center">TXT2</th>
-		                        <th class="text-center">TXT3</th>
-		                        <th class="text-center">base_cnt</th>
-		                        <th class="text-center">base_sec</th>
-		                        <th class="text-center">policy_name</th>
-		                        <th class="text-center">policy_info</th>
-		                        <th class="text-center">rule_type</th>
-		                        <th class="text-center">action_type</th>
-		                        <th class="text-center">create_date</th>
-		                        <th class="text-center">modify_date</th>
-		                    </tr>
-		                </thead>
-		                <tbody>
-		                    <!-- 데이터 행들 -->
-		                    <tr th:each="policy, iterstat : ${policy}">
-		                        <td th:text="${iterstat.index + 1}" class="text-center"></td>
-		                        <td class="text-center">
-		                            <button type="button"
-		                                    th:onclick="update_activation(event,[[${policy.rule_no}]], [[${policy.activation}]])"
-		                                    value="1" class="btn btn-link">
-		                                <img id="activationImage-[[${policy.rule_no}]]"
-		                                     th:src="${policy.activation == 0 ? '/img/off.png' : '/img/on.png'}" width="40"
-		                                     height="20">
-		                            </button>
-		                        </td>
-		                        <form th:action="@{/modify}" method="post" class="m-0">
-		                            <td th:text="${policy.rule_no}" name="rule_no" class="text-center"></td>
-		                            <td th:text="${policy.from_ip}" name="from_ip" class="text-center"></td>
-		                            <td th:text="${policy.to_ip}" name="to_ip" class="text-center"></td>
-		                            <td th:text="${policy.port}" name="port" class="text-center"></td>
-		                            <td th:text="${policy.txt1}" name="txt1" class="text-center"></td>
-		                            <td th:text="${policy.txt2}" name="txt2" class="text-center"></td>
-		                            <td th:text="${policy.txt3}" name="txt3" class="text-center"></td>
-		                            <td th:text="${policy.base_cnt}" name="base_cnt" class="text-center"></td>
-		                            <td th:text="${policy.base_sec}" name="base_sec" class="text-center"></td>
-		                            <td th:text="${policy.policy_name}" name="policy_name" class="text-center"></td>
-		                            <td th:text="${policy.policy_info}" name="policy_info" class="text-center"></td>
-		                            <td th:text="${policy.rule_type}" name="rule_type" class="text-center"></td>
-		                            <td th:text="${policy.action_type}" name="action_type" class="text-center"></td>
-		                            <td th:text="${policy.create_date}" name="create_date" class="text-center"></td>
-		                            <td th:text="${policy.modify_date}" name="modify_date" class="text-center"></td>
-		                            <td class="text-center">
-		                                <input type="submit" th:formaction="@{'modify/' + ${policy.rule_no}}" class="btn btn-primary" value="수정">
-		                            </td>
-		                        </form>
-		                    </tr>
-		                </tbody>
-		            </table>
-		        </div>
-		        <nav aria-label="Page navigation">
-		            <ul class="pagination">
-		                <li class="page-item">
-		                    <a class="page-link" href="#" aria-label="Previous" id="prevPage">
-		                        <span aria-hidden="true">&laquo;</span>
-		                    </a>
-		                </li>
-		                <!-- 페이지 번호가 동적으로 삽입될 부분 -->
-		                <li class="page-item">
-		                    <a class="page-link" href="#" aria-label="Next" id="nextPage">
-		                        <span aria-hidden="true">&raquo;</span>
-		                    </a>
-		                </li>
-		            </ul>
-		        </nav>
-		        <a href="/insertPolicy" class="btn btn-success">정책 추가</a>
-		    </div>
-		</div>
-		</main>
-	    </div>
-	</div>
-	
-	<!-- 모달 다이얼로그 -->
-	<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
-	    <div class="modal-dialog">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <h5 class="modal-title" id="searchModalLabel">정책 검색 조건 입력</h5>
-	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	            </div>
-	            <div class="modal-body">
-	                <form method="get" action="/search_policy" id="logForm">
-	                    <div class="row g-3">
-	                        <!-- 기존 폼 필드들 -->
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="activation">Activation</label>
-	                                <input type="number" id="activation" name="activation" class="form-control" placeholder="1: 활성화, 0: 비활성화">
-	                            </div>
-	                        </div>
+        <!--  Main wrapper -->
+        <div class="body-wrapper">
+            <!--  Header Start -->
+            <header class="app-header">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <h1 class="my-4">정책관리</h1>
+                    <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+                    </div>
+                </nav>
+            </header> <!--  Header End -->
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="rule_no">Rule No</label>
-	                                <input type="text" id="rule_no" name="rule_no" class="form-control">
-	                            </div>
-	                        </div>
+            <div class="container-fluid">
+                <!--  Row 1 -->
+                <div class="row">
+                    <!-- week line chart-->
+                    <div class="col-lg-12 d-flex" style="width: 100%; height: 100px;">
+                        <div class="card w-100">
+                            <div class="card-body">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#searchModal">
+                                    <i class="fas fa-search"></i> 정책
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 정책을 테이블 형식으로 보여줌 -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        정책 목록
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="datatablesSimple" class="table-bordered policy-table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">no</th>
+                                        <th class="text-center">activation</th>
+                                        <th class="text-center">정책번호</th>
+                                        <th class="text-center">FROM_IP</th>
+                                        <th class="text-center">TO_IP</th>
+                                        <th class="text-center">PORT</th>
+                                        <th class="text-center">TXT1</th>
+                                        <th class="text-center">TXT2</th>
+                                        <th class="text-center">TXT3</th>
+                                        <th class="text-center">base_cnt</th>
+                                        <th class="text-center">base_sec</th>
+                                        <th class="text-center">policy_name</th>
+                                        <th class="text-center">policy_info</th>
+                                        <th class="text-center">rule_type</th>
+                                        <th class="text-center">action_type</th>
+                                        <th class="text-center">create_date</th>
+                                        <th class="text-center">modify_date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- 데이터 행들 -->
+                                    <tr th:each="policy, iterstat : ${policy}">
+                                        <td th:text="${iterstat.index + 1}" class="text-center"></td>
+                                        <td class="text-center">
+                                            <button type="button"
+                                                th:onclick="update_activation(event,[[${policy.rule_no}]], [[${policy.activation}]])"
+                                                value="1" class="btn btn-link">
+                                                <img id="activationImage-[[${policy.rule_no}]]"
+                                                    th:src="${policy.activation == 0 ? '/img/off.png' : '/img/on.png'}"
+                                                    width="40" height="20">
+                                            </button>
+                                        </td>
+                                        <form th:action="@{/modify}" method="post" class="m-0">
+                                            <td th:text="${policy.rule_no}" name="rule_no" class="text-center"></td>
+                                            <td th:text="${policy.from_ip}" name="from_ip" class="text-center"></td>
+                                            <td th:text="${policy.to_ip}" name="to_ip" class="text-center"></td>
+                                            <td th:text="${policy.port}" name="port" class="text-center"></td>
+                                            <td th:text="${policy.txt1}" name="txt1" class="text-center"></td>
+                                            <td th:text="${policy.txt2}" name="txt2" class="text-center"></td>
+                                            <td th:text="${policy.txt3}" name="txt3" class="text-center"></td>
+                                            <td th:text="${policy.base_cnt}" name="base_cnt" class="text-center"></td>
+                                            <td th:text="${policy.base_sec}" name="base_sec" class="text-center"></td>
+                                            <td th:text="${policy.policy_name}" name="policy_name" class="text-center">
+                                            </td>
+                                            <td th:text="${policy.policy_info}" name="policy_info" class="text-center">
+                                            </td>
+                                            <td th:text="${policy.rule_type}" name="rule_type" class="text-center"></td>
+                                            <td th:text="${policy.action_type}" name="action_type" class="text-center">
+                                            </td>
+                                            <td th:text="${policy.create_date}" name="create_date" class="text-center">
+                                            </td>
+                                            <td th:text="${policy.modify_date}" name="modify_date" class="text-center">
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="submit" th:formaction="@{'modify/' + ${policy.rule_no}}"
+                                                    class="btn btn-primary" value="수정">
+                                            </td>
+                                        </form>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous" id="prevPage">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <!-- 페이지 번호가 동적으로 삽입될 부분 -->
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next" id="nextPage">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <a href="/insertPolicy" class="btn btn-success">정책 추가</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="from_ip">From IP</label>
-	                                <input type="text" id="from_ip" name="from_ip" class="form-control">
-	                            </div>
-	                        </div>
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="to_ip">To IP</label>
-	                                <input type="text" id="to_ip" name="to_ip" class="form-control">
-	                            </div>
-	                        </div>
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="port">Port</label>
-	                                <input type="number" id="port" name="port" class="form-control">
-	                            </div>
-	                        </div>
+        <!-- 모달 다이얼로그 -->
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="searchModalLabel">정책 검색 조건 입력</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="get" action="/search_policy" id="logForm">
+                            <div class="row g-2">
+                                <!-- 기존 폼 필드들 -->
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="activation">Activation</label>
+                                        <input type="number" id="activation" name="activation" class="form-control"
+                                            placeholder="1: 활성화, 0: 비활성화">
+                                    </div>
+                                </div>
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="txt1">Txt1</label>
-	                                <input type="text" id="txt1" name="txt1" class="form-control">
-	                            </div>
-	                        </div>
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="rule_no">Rule No</label>
+                                        <input type="text" id="rule_no" name="rule_no" class="form-control" maxlength="5" placeholder="ex) 10001">
+                                    </div>
+                                </div>
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="txt2">Txt2</label>
-	                                <input type="text" id="txt2" name="txt2" class="form-control">
-	                            </div>
-	                        </div>
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="from_ip">From IP</label>
+                                        <input type="text" id="from_ip" name="from_ip" class="form-control" maxlength="15" >
+                                    </div>
+                                </div>
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="txt3">Txt3</label>
-	                                <input type="text" id="txt3" name="txt3" class="form-control">
-	                            </div>
-	                        </div>
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="to_ip">To IP</label>
+                                        <input type="text" id="to_ip" name="to_ip" class="form-control" maxlength="15">
+                                    </div>
+                                </div>
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="base_cnt">Base Count</label>
-	                                <input type="number" id="base_cnt" name="base_cnt" class="form-control">
-	                            </div>
-	                        </div>
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="port">Port</label>
+                                        <input type="number" id="port" name="port" class="form-control" min="0" max="65535" placeholder="0 ~ 65535">
+                                    </div>
+                                </div>
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="base_sec">Base Sec</label>
-	                                <input type="number" id="base_sec" name="base_sec" class="form-control">
-	                            </div>
-	                        </div>
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="txt1">Txt1</label>
+                                        <input type="text" id="txt1" name="txt1" class="form-control" placeholder="ex) select">
+                                    </div>
+                                </div>
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="policy_name">Policy Name</label>
-	                                <input type="text" id="policy_name" name="policy_name" class="form-control">
-	                            </div>
-	                        </div>
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="txt2">Txt2</label>
+                                        <input type="text" id="txt2" name="txt2" class="form-control">
+                                    </div>
+                                </div>
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="policy_info">Policy Info</label>
-	                                <input type="text" id="policy_info" name="policy_info" class="form-control">
-	                            </div>
-	                        </div>
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="txt3">Txt3</label>
+                                        <input type="text" id="txt3" name="txt3" class="form-control">
+                                    </div>
+                                </div>
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="rule_type">Rule Type</label>
-	                                <input type="number" id="rule_type" name="rule_type" class="form-control" placeholder="0: 패턴, 1: 행동">
-	                            </div>
-	                        </div>
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="base_cnt">Base Count</label>
+                                        <input type="number" id="base_cnt" name="base_cnt" class="form-control">
+                                    </div>
+                                </div>
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="action_type">Action Type</label>
-	                                <input type="number" id="action_type" name="action_type" class="form-control">
-	                            </div>
-	                        </div>
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="base_sec">Base Sec</label>
+                                        <input type="number" id="base_sec" name="base_sec" class="form-control">
+                                    </div>
+                                </div>
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="from_create_date">From Create Date</label>
-	                                <input type="datetime-local" id="from_create_date" name="from_create_date" class="form-control">
-	                            </div>
-	                        </div>
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="policy_name">Policy Name</label>
+                                        <input type="text" id="policy_name" name="policy_name" class="form-control">
+                                    </div>
+                                </div>
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="to_create_date">To Create Date</label>
-	                                <input type="datetime-local" id="to_create_date" name="to_create_date" class="form-control">
-	                            </div>
-	                        </div>
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="policy_info">Policy Info</label>
+                                        <input type="text" id="policy_info" name="policy_info" class="form-control">
+                                    </div>
+                                </div>
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="from_modify_date">From Modify Date</label>
-	                                <input type="datetime-local" id="from_modify_date" name="from_modify_date" class="form-control">
-	                            </div>
-	                        </div>
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="rule_type">Rule Type</label>
+                                        <input type="number" id="rule_type" name="rule_type" class="form-control" pattern="0|1"
+                                            placeholder="0: 패턴, 1: 행동">
+                                    </div>
+                                </div>
 
-	                        <div class="col-md-6">
-	                            <div class="form-group">
-	                                <label for="to_modify_date">To Modify Date</label>
-	                                <input type="datetime-local" id="to_modify_date" name="to_modify_date" class="form-control">
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <div class="mt-3">
-	                        <button type="submit" class="btn btn-primary">
-	                            <i class="fas fa-search"></i> 조회
-	                        </button>
-	                        <button type="button" class="btn btn-secondary" onclick="resetForm()">
-	                            <i class="fas fa-undo"></i> 초기화
-	                        </button>
-	                    </div>
-	                </form>
-	            </div>
-	        </div>
-	    </div>
-	</div>
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="action_type">Action Type</label>
+                                        <input type="number" id="action_type" name="action_type" class="form-control" pattern="0|1"
+											placeholder="0: 로깅, 1: 차단" >
+                                    </div>
+                                </div>
 
-	
-	
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-			<script>
-			    $(document).ready(function() {
-			        $('#policyTable').DataTable({
-			            "pageLength": 10, // Number of rows to display per page
-			            "lengthMenu": [10, 20, 50, 100] // Options for number of rows to display per page
-			        });
-			    });
-			</script>
-            <script>
-                /*// 비동기 삭제
-                function delete_policy(event, rule_no) {
-                    event.preventDefault();
-    
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="from_create_date">From Create Date</label>
+                                        <input type="datetime-local" id="from_create_date" name="from_create_date"
+                                            class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="to_create_date">To Create Date</label>
+                                        <input type="datetime-local" id="to_create_date" name="to_create_date"
+                                            class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="from_modify_date">From Modify Date</label>
+                                        <input type="datetime-local" id="from_modify_date" name="from_modify_date"
+                                            class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label for="to_modify_date">To Modify Date</label>
+                                        <input type="datetime-local" id="to_modify_date" name="to_modify_date"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search"></i> 조회
+                                </button>
+                                <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                                    <i class="fas fa-undo"></i> 초기화
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#policyTable').DataTable({
+                    "pageLength": 10, // Number of rows to display per page
+                    "lengthMenu": [10, 20, 50, 100] // Options for number of rows to display per page
+                });
+            });
+        </script>
+        <script>
+            /*// 비동기 삭제
+            function delete_policy(event, rule_no) {
+                event.preventDefault();
+ 
+                $.ajax({
+                    type: 'POST'
+                    , url: '/delete_policy'
+                    , contentType: 'application/json'
+                    , data: JSON.stringify({ rule_no:rule_no })
+                    , success: function () {
+                        if (confirm("변경 하시겠습니까?")) {
+                            let del_pol = event.target.parentNode.parentNode;
+                            del_pol.remove();
+                            let but = event.target.parentNode;
+                        	
+                            alert("변경 되었습니다.");
+                        }
+                    }
+                    , error: function (xhr, status, error) {
+                        console.log('Error: ', error);
+                    }
+                })
+            }*/
+
+            function update_activation(event, rule_no, activation) {
+                event.preventDefault();
+
+                if (confirm("변경 하시겠습니까?")) {
                     $.ajax({
                         type: 'POST'
-                        , url: '/delete_policy'
+                        , url: '/update_activation'
                         , contentType: 'application/json'
-                        , data: JSON.stringify({ rule_no:rule_no })
+                        , data: JSON.stringify({ rule_no: rule_no })
                         , success: function () {
-                            if (confirm("변경 하시겠습니까?")) {
-                                let del_pol = event.target.parentNode.parentNode;
-                                del_pol.remove();
-                                let but = event.target.parentNode;
-                            	
-                                alert("변경 되었습니다.");
+
+                            let target = event.target;
+                            console.log(target);
+
+                            if (target.value == 1) {
+                                target.src = '/img/off.png';
+                                target.value = 0;
+                            } else {
+                                target.src = '/img/on.png';
+                                target.value = 1;
                             }
+
+                            alert("변경 되었습니다.");
+
                         }
                         , error: function (xhr, status, error) {
                             console.log('Error: ', error);
                         }
                     })
-                }*/
 
-                function update_activation(event, rule_no, activation) {
-                    event.preventDefault();
+                }
+            }
 
-                    if (confirm("변경 하시겠습니까?")) {
-                        $.ajax({
-                            type: 'POST'
-                            , url: '/update_activation'
-                            , contentType: 'application/json'
-                            , data: JSON.stringify({ rule_no: rule_no })
-                            , success: function () {
+        </script>
 
-                                let target = event.target;
-                                console.log(target);
+        <script>
+            function resetForm() {
+                document.getElementById("logForm").reset();
+                window.location.href = '/policyManager';
+            }
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const rowsPerPage = 10;
+                let currentPage = 1;
 
-                                if (target.value == 1) {
-                                    target.src = '/img/off.png';
-                                    target.value = 0;
-                                } else {
-                                    target.src = '/img/on.png';
-                                    target.value = 1;
-                                }
+                function displayTable(page) {
+                    const table = document.querySelector('.policy-table tbody');
+                    const rows = Array.from(table.querySelectorAll('tr'));
+                    const start = (page - 1) * rowsPerPage;
+                    const end = start + rowsPerPage;
 
-                                alert("변경 되었습니다.");
+                    rows.forEach((row, index) => {
+                        row.style.display = (index >= start && index < end) ? '' : 'none';
+                    });
 
-                            }
-                            , error: function (xhr, status, error) {
-                                console.log('Error: ', error);
-                            }
-                        })
+                    updatePagination(rows.length, page);
+                }
 
+                function updatePagination(totalRows, page) {
+                    const pageCount = Math.ceil(totalRows / rowsPerPage);
+                    const pagination = document.querySelector('.pagination');
+                    pagination.innerHTML = '';
+
+                    const prevItem = document.createElement('li');
+                    prevItem.className = 'page-item';
+                    prevItem.innerHTML = `<a class="page-link" href="#" aria-label="Previous" id="prevPage"><span aria-hidden="true">&laquo;</span></a>`;
+                    pagination.appendChild(prevItem);
+
+                    for (let i = 1; i <= pageCount; i++) {
+                        const pageItem = document.createElement('li');
+                        pageItem.className = `page-item ${i === page ? 'active' : ''}`;
+                        pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                        pagination.appendChild(pageItem);
                     }
+
+                    const nextItem = document.createElement('li');
+                    nextItem.className = 'page-item';
+                    nextItem.innerHTML = `<a class="page-link" href="#" aria-label="Next" id="nextPage"><span aria-hidden="true">&raquo;</span></a>`;
+                    pagination.appendChild(nextItem);
+
+                    document.querySelector('#prevPage').addEventListener('click', function (event) {
+                        event.preventDefault();
+                        if (currentPage > 1) {
+                            currentPage--;
+                            displayTable(currentPage);
+                        }
+                    });
+
+                    document.querySelector('#nextPage').addEventListener('click', function (event) {
+                        event.preventDefault();
+                        if (currentPage < pageCount) {
+                            currentPage++;
+                            displayTable(currentPage);
+                        }
+                    });
+
+                    pagination.querySelectorAll('.page-item:not(.active)').forEach(item => {
+                        item.addEventListener('click', function (event) {
+                            event.preventDefault();
+                            currentPage = parseInt(this.textContent);
+                            displayTable(currentPage);
+                        });
+                    });
                 }
 
-            </script>
-
-            <script>
-                function resetForm() {
-                    document.getElementById("logForm").reset();
-                    window.location.href = '/policyManager';
-                }
-            </script>
-			<script>
-			    document.addEventListener('DOMContentLoaded', function () {
-			        const rowsPerPage = 10;
-			        let currentPage = 1;
-
-			        function displayTable(page) {
-			            const table = document.querySelector('.policy-table tbody');
-			            const rows = Array.from(table.querySelectorAll('tr'));
-			            const start = (page - 1) * rowsPerPage;
-			            const end = start + rowsPerPage;
-
-			            rows.forEach((row, index) => {
-			                row.style.display = (index >= start && index < end) ? '' : 'none';
-			            });
-
-			            updatePagination(rows.length, page);
-			        }
-
-			        function updatePagination(totalRows, page) {
-			            const pageCount = Math.ceil(totalRows / rowsPerPage);
-			            const pagination = document.querySelector('.pagination');
-			            pagination.innerHTML = '';
-
-			            const prevItem = document.createElement('li');
-			            prevItem.className = 'page-item';
-			            prevItem.innerHTML = `<a class="page-link" href="#" aria-label="Previous" id="prevPage"><span aria-hidden="true">&laquo;</span></a>`;
-			            pagination.appendChild(prevItem);
-
-			            for (let i = 1; i <= pageCount; i++) {
-			                const pageItem = document.createElement('li');
-			                pageItem.className = `page-item ${i === page ? 'active' : ''}`;
-			                pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-			                pagination.appendChild(pageItem);
-			            }
-
-			            const nextItem = document.createElement('li');
-			            nextItem.className = 'page-item';
-			            nextItem.innerHTML = `<a class="page-link" href="#" aria-label="Next" id="nextPage"><span aria-hidden="true">&raquo;</span></a>`;
-			            pagination.appendChild(nextItem);
-
-			            document.querySelector('#prevPage').addEventListener('click', function (event) {
-			                event.preventDefault();
-			                if (currentPage > 1) {
-			                    currentPage--;
-			                    displayTable(currentPage);
-			                }
-			            });
-
-			            document.querySelector('#nextPage').addEventListener('click', function (event) {
-			                event.preventDefault();
-			                if (currentPage < pageCount) {
-			                    currentPage++;
-			                    displayTable(currentPage);
-			                }
-			            });
-
-			            pagination.querySelectorAll('.page-item:not(.active)').forEach(item => {
-			                item.addEventListener('click', function (event) {
-			                    event.preventDefault();
-			                    currentPage = parseInt(this.textContent);
-			                    displayTable(currentPage);
-			                });
-			            });
-			        }
-
-			        displayTable(currentPage);
-			    });
-			</script>
+                displayTable(currentPage);
+            });
+        </script>
 </body>
 
 </html>

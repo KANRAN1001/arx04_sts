@@ -9,22 +9,25 @@
 	
 	const ctx3 = document.getElementById('weekLineChart');
 					new Chart(ctx3, {
-						  type: 'line',
+						  type: 'bar',
 						  data: {
 						    labels: type3,
 						    datasets: [{ 
 						        data: count3,
 						        label: "행동: "+ [[${week_behavior_count}]],
-						        borderColor: "#3e95cd",
-								tension: 0.3,
-								pointRadius: 3,
+								borderColor: "#5D87FF",
+								borderWidth: 1,
+								borderRadius: 6,
+								borderSkipped: false,
 						        fill: false
 						      }, { 
 						        data: count4,
 						        label: "패턴: " + [[${week_pattern_count}]],
-						        borderColor: "#c45850",
-								tension: 0.3,
-								pointRadius: 3,
+								backgroundColor: "#49BEFF",
+								borderColor: "#49BEFF",
+								borderWidth: 1,
+								borderRadius: 6,
+								borderSkipped: false,
 						        fill: false
 						      }
 						    ]
@@ -32,6 +35,30 @@
 						  options: {
 						    title: {
 						      display: true,
+							  scales: {
+							      x: {
+							          beginAtZero: true,
+							          grid: {
+							              display: false
+							          },
+							          ticks: {
+							              color: "#adb0bb"
+							          }
+							      },
+							      y: {
+							          beginAtZero: true,
+							          min: 0,
+							          max: 400,
+							          ticks: {
+							              stepSize: 100,
+							              color: "#adb0bb"
+							          },
+							          grid: {
+							              color: "rgba(0,0,0,0.1)",
+							              borderDash: [3, 3]
+							          }
+							      }
+							  },
 						    }
 						  }
 						});

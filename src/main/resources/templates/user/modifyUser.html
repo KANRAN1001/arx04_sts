@@ -1,22 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head th:insert="~{layout/header :: header}"></head>
+	
+<head th:insert="~{layout/head :: head}"></head>
 
 <body>
-	<div class="container-fluid">
-	    <div class="row">	
-		<!-- sidebar-->
-		<nav th:replace="~{/layout/body :: sidebar}"></nav>	
-		
-		<!-- Main Content -->
-		<main role="main" class="col-md-10 ml-sm-auto px-4">
-		    <h1 class="my-4">대시보드</h1>
-			<div class="row">
-                        <div class="card-body">
-							<div class="centerASD">
-									<form action="/modifyUser" method="get"> 				
-										<table> 
+	<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+	    data-sidebar-position="fixed" data-header-position="fixed">
+	    <!-- sidebar-->
+	    <aside th:replace="~{/layout/body :: sidebar}"></aside>
+
+	    <!--  Main wrapper -->
+	    <div class="body-wrapper">
+	        <!--  Header Start -->
+	        <header class="app-header">
+	            <nav class="navbar navbar-expand-lg navbar-light">
+	                <h1 class="my-4">유저추가</h1>
+	                <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+	                </div>
+	            </nav>
+	        </header> <!--  Header End -->
+			
+			<!-- Main Content -->
+			<div class="container-fluid">
+			       <!--  Row 1 -->
+			       <div class="row">
+					<div class="col-lg-6 d-flex align-items-stretch">
+						<div class="card w-100">
+						    <div class="card-body p-4">
+									<form action="/modifyUser" method="get" id="myForm"> 				
+										<table style="text-align: center;"> 
 											<thead>
 												<tr>
 													<th>유정</th>
@@ -57,12 +69,11 @@
 											</tfoot>
 										</table>
 										</form>
-							</div>
-                        </div>
-			</div>
-		</main>
-	    </div>
-	</div>
+												    </div>
+												</div>
+											</div>
+									       </div>
+									</div>
    
 	<script th:replace="~{/layout/js :: js1}"></script>
 	<script th:replace="~{/layout/js :: js2}"></script>
@@ -72,6 +83,7 @@
 	<script th:replace="~{/layout/js :: js6}"></script>
 	<script th:replace="~{/layout/js :: js7}"></script>
 	<script th:replace="~{/layout/js :: js8}"></script>
+	<script th:replace="~{/layout/js :: js9}"></script>
 </body>
 
 </html>

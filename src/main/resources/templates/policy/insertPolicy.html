@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{layout/header :: header}"></head>
+<head th:insert="~{layout/head :: head}"></head>>
 
 <body>
-
-	<div class="container-fluid">
-	    <div class="row">	
-		<!-- sidebar-->
-		<nav th:replace="~{/layout/body :: sidebar}"></nav>	
+	<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+	    data-sidebar-position="fixed" data-header-position="fixed">
+	    <!-- sidebar-->
+	    <aside th:replace="~{/layout/body :: sidebar}"></aside>
 	
-		<main role="main" class="col-md-10 ml-sm-auto px-4">
-		    <h1 class="my-4">대시보드</h1>
-			<div class="row">
-<!--                        <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            정책 
-                        </div>-->
-                        <div class="card-body">
-							<div class="centerASD">
-                            <form action="insertpolicy" method="get">
-								<table> 
-									<thead>
+		<!--  Main wrapper -->
+		<div class="body-wrapper">
+		    <!--  Header Start -->
+		    <header class="app-header">
+		        <nav class="navbar navbar-expand-lg navbar-light">
+		            <h1 class="my-4">정책추가</h1>
+		            <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+		            </div>
+		        </nav>
+		    </header> <!--  Header End -->
+			<div class="container-fluid">
+			       <!--  Row 1 -->
+			       <div class="row">
+					<div class="col-lg-6 d-flex align-items-stretch">
+						<div class="card w-100">
+						    <div class="card-body p-4">
+                            <form action="insertpolicy" method="get" id="myForm">
+								<table class="styled-table"> 
+									<thead style="text-align: center;">
 										<tr>
 											<th>정책</th>
 											<th>내용</th>
@@ -30,61 +36,48 @@
 									<tbody>
 										<tr>
 											<td>활성화/비활성화</td>
-											<td><input type="text" name="activation" placeholder="NOT NULL" ></td>
-											<td>0:비활성화 / 1:활성화</td>
+											<td><input type="text" name="activation" placeholder="0:비활성화 1:활성화" pattern="0|1" required></td>
 										</tr>
 											
 										<tr>
 											<td>정책번호</td>
-											<td><input  type="text" name="rule_no" placeholder="NOT NULL" > </td>
-											<td>정책의 번호(고유값)</td>
+											<td><input  type="text" name="rule_no" maxlength="5" placeholder="ex) 10001" required> </td>
 										</tr>
 										<tr>
-											<td>아이피</td>
-											<td><input type="text" name="from_ip"></td>
-											<td>탐지할 FROM_IP</td>
+											<td>FROM_IP</td>
+											<td><input type="text" name="from_ip" maxlength="15" ></td>
 										<tr>
 										<tr>
-											<td>아이피</td>
-											<td><input type="text" name="to_ip"></td>
-											<td>탐지할 TO_IP</td>
+											<td>TO_IP</td>
+											<td><input type="text" name="to_ip" maxlength="15" ></td>
 										<tr>											
-											
-
 										<tr>
-											<td>포트</td>
-											<td><input type="text" name="port"></td>
-											<td>탐지할 포트</td>
+											<td>PORT</td>
+											<td><input type="number" name="port" min="0" max="65535" placeholder="0 ~ 65535"></td>
 										</tr>
 										<tr>
-											<td>패턴1</td>
+											<td>패턴</td>
 											<td><input type="text" name="txt1"></td>
-											<td>패킷탐지 할 단어</td>
 										</tr>
 										<tr>
-											<td>패턴2</td>
+											<td>패턴</td>
 											<td><input type="text" name="txt2"></td>
-											<td>패킷탐지 할 단어</td>
 										</tr>
 										<tr>
-											<td>패턴3</td>
+											<td>패턴</td>
 											<td><input type="text" name="txt3"></td>
-											<td>패킷탐지 할 단어</td>
 										</tr>
 										<tr>
 											<td>기준 횟수</td>
-											<td><input type="text" name="base_cnt" placeholder="NOT NULL"></td>
-											<td>몇번 하면 잡을지</td> 
+											<td><input type="number" name="base_cnt" required></td>
 										</tr>
 										<tr>
 											<td>기준 초</td>
-											<td><input type="text" name="base_sec" placeholder="NOT NULL"></td>
-											<td>제한시간은 몇초인지</td>
+											<td><input type="number" name="base_sec" required></td>
 										</tr>
 										<tr>
 											<td>정책 이름</td>
-											<td><input type="text" name="policy_name" placeholder="NOT NULL"></td>
-											<td>정책 이름(ex.SQL-Injection-1)</td>
+											<td><input type="text" name="policy_name"></td>
 										</tr>
 										<tr>
 											<td>정책 정보</td>
@@ -92,28 +85,50 @@
 										</tr>	
 										<tr>
 											<td>탐지 타입</td>
-											<td><input type="text" name="rule_type" placeholder="NOT NULL"></td>
-											<td>0:탐지 / 1:행동</td>
+											<td><input type="text" name="rule_type" placeholder="0:패턴 1:행동" pattern="0|1" required></td>
 										</tr>	
 										<tr>
 											<td>액션타입</td>
-											<td><input type="text" name="action_type" placeholder="NOT NULL"></td>
-											<td>0:패스 / 1:탐지 / 2:격리 / 3:차단</td>
+											<td><input type="text" name="action_type" placeholder="0:로깅 1:차단" pattern="0|1" required></td>
 										</tr>		
 									</tbody>
 									<tfoot>
-										<input type="submit" value="정책추가">
+										<tr>
+										<td colspan="3"><input type="submit" value="정책추가" class="submit-button"> </td>
+										</tr>
 									</tfoot>
 								</table>
                             </form>
 							</div>
                         </div>
-			</div>
-		</main>
 	    </div>
 	</div>
 
-    
+	<script>
+	    document.getElementById('myForm').addEventListener('submit', function(event) {
+	        // 필수 입력 필드의 유효성을 확인
+	        var isValid = true;
+	        var formGroups = document.querySelectorAll('.form-group');
+
+	        formGroups.forEach(function(group) {
+	            var input = group.querySelector('input');
+	            var errorIcon = group.querySelector('.error-icon');
+
+	            // 입력 필드가 비어 있거나 유효하지 않을 때
+	            if (!input.checkValidity()) {
+	                isValid = false;
+	                errorIcon.style.display = 'inline'; // 느낌표 표시
+	            } else {
+	                errorIcon.style.display = 'none'; // 느낌표 숨기기
+	            }
+	        });
+
+	        // 폼 제출을 방지하려면
+	        if (!isValid) {
+	            event.preventDefault();
+	        }
+	    });
+	</script>
 
 </body>
 

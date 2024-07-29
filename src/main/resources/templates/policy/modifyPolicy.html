@@ -1,100 +1,134 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{layout/header :: header}"></head>
+<head th:insert="~{layout/head :: head}"></head>>
 
 <body>
-	<div class="container-fluid">
-	    <div class="row">	
-		<!-- sidebar-->
-		<nav th:replace="~{/layout/body :: sidebar}"></nav>	
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed">
+        <!-- sidebar-->
+        <aside th:replace="~{/layout/body :: sidebar}"></aside>
 
-		<!-- Main Content -->
-		<main role="main" class="col-md-10 ml-sm-auto px-4">
-		    <h1 class="my-4">대시보드</h1>
-			<div class="row">
-				
-<!--                    <div class="card mb-4">
-                        <div class="card-body">
-							<div class="centerASD">-->
-									<form action="/modify" method="get"> 				
-										<table> 
-											<thead>
-												<tr>
-													<th>정책</th>
-													<th>내용</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>정책번호</td>
-													<td><input class="inputorder" type="text" name="rule_no" readonly th:value="${policy.rule_no}"> </td>
-												</tr>
-												<tr>
-													<td>출발 아이피</td>
-													<td><input type="text" name="from_ip" th:placeholder="${policy.from_ip}"></td>
-												<tr>
-												<tr>
-													<td>도착 아이피</td>
-													<td><input type="text" name="to_ip" th:placeholder="${policy.to_ip}"></td>
-												<tr>													
-												<tr>
-													<td>포트</td>
-													<td><input type="text" name="port" th:placeholder="${policy.port}"></td>
-												</tr>
-												<tr>
-													<td>패턴1</td>
-													<td><input type="text" name="txt1" th:placeholder="${policy.txt1}"></td>
-												</tr>
-												<tr>
-													<td>패턴2</td>
-													<td><input type="text" name="txt2" th:placeholder="${policy.txt2}"></td>
-												</tr>
-												<tr>
-													<td>패턴3</td>
-													<td><input type="text" name="txt3" th:placeholder="${policy.txt3}"></td>
-												</tr>
-												<tr>
-													<td>기준 횟수</td>
-													<td><input type="text" name="base_cnt" th:placeholder="${policy.base_cnt}"></td>
-												</tr>
-												<tr>
-													<td>기준 초</td>
-													<td><input type="text" name="base_sec" th:placeholder="${policy.base_sec}"></td>
-												</tr>
-												<tr>
-													<td>정책 이름</td>
-													<td><input type="text" name="policy_name" th:placeholder="${policy.policy_name}"></td>
-												</tr>
-												<tr>
-													<td>정책 정보</td>
-													<td><input type="text" name="policy_info" th:placeholder="${policy.policy_info}"></td>
-												</tr>
-												
-												<tr>
-													<td>탐지 타입</td>
-													<td><input type="text" name="rule_type" th:value="${rule_type}" placeholder="0:패턴 1:행동"></td>
-												</tr>	
-												<tr>
-													<td>액션타입</td>
-													<td><input type="text" name="action_type" th:value="${action_type}" placeholder=""></td>
-												</tr>		
-											</tbody>
-											<tfoot>
-												<tr><input type="submit" value="정책수정">	</tr>
-											</tfoot>
-										</table>
-										
-<!--							</div>
+        <!--  Main wrapper -->
+        <div class="body-wrapper">
+            <!--  Header Start -->
+            <header class="app-header">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <h1 class="my-4">정책수정</h1>
+                    <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+                    </div>
+                </nav>
+            </header> <!--  Header End -->
+
+            <div class="container-fluid">
+                <!--  Row 1 -->
+                <div class="row">
+                    <div class="col-lg-6 d-flex align-items-stretch">
+                        <div class="card w-100">
+                            <div class="card-body p-4">
+                                <form action="/modify" method="get" id="myForm">
+                                    <table class="styled-table">
+                                        <thead style="text-align: center;">
+                                            <tr>
+                                                <th>정책</th>
+                                                <th>내용</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+												<td>정책번호</td>
+												<td><input  type="text" name="rule_no" maxlength="5"  required readonly th:value="${policy.rule_no}"> </td>
+                                            </tr>
+                                            <tr>
+                                                <td>출발 아이피</td>
+                                                <td><input type="text" name="from_ip" th:value="${policy.from_ip}" maxlength="15"></td>
+                                            <tr>
+                                            <tr>
+                                                <td>도착 아이피</td>
+                                                <td><input type="text" name="to_ip" th:value="${policy.to_ip}" maxlength="15">
+                                                </td>
+                                            <tr>
+                                            <tr>
+                                                <td>포트</td>
+                                                <td><input type="text" name="port" th:value="${policy.port}" min="0" max="65535" placeholder="0 ~ 65535"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>패턴1</td>
+                                                <td><input type="text" name="txt1" th:value="${policy.txt1}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>패턴2</td>
+                                                <td><input type="text" name="txt2" th:value="${policy.txt2}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>패턴3</td>
+                                                <td><input type="text" name="txt3" th:value="${policy.txt3}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>기준 횟수</td>
+                                                <td><input type="text" name="base_cnt" required th:value="${policy.base_cnt}" ></td>
+                                            </tr>
+                                            <tr>
+                                                <td>기준 초</td>
+                                                <td><input type="text" name="base_sec" required th:value="${policy.base_sec}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>정책 이름</td>
+                                                <td><input type="text" name="policy_name" th:value="${policy.policy_name}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>정책 정보</td>
+                                                <td><input type="text" name="policy_info" th:value="${policy.policy_info}"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>탐지 타입</td>
+                                                <td><input type="text" name="rule_type" th:value="${rule_type != 1 ? '0' : rule_type}" required pattern="0|1"
+                                                        placeholder="0:패턴 1:행동"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>액션타입</td>
+                                                <td><input type="text" name="action_type" th:value="${action_type != 1 ? '0' : action_type}" required  pattern="0|1"
+                                                        placeholder=""></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+												<td colspan="2"><input  type="submit" value="정책수정" class="submit-button"> </td>
+											</tr>
+                                        </tfoot>
+                                    </table>
+
+                                </form>
+                            </div>
                         </div>
-                    </div>-->
-
+                    </div>
                 </div>
-				</main>
-        </div>
-	</div>
+				<script>
+				    document.getElementById('myForm').addEventListener('submit', function(event) {
+				        // 필수 입력 필드의 유효성을 확인
+				        var isValid = true;
+				        var formGroups = document.querySelectorAll('.form-group');
 
+				        formGroups.forEach(function(group) {
+				            var input = group.querySelector('input');
+				            var errorIcon = group.querySelector('.error-icon');
 
+				            // 입력 필드가 비어 있거나 유효하지 않을 때
+				            if (!input.checkValidity()) {
+				                isValid = false;
+				                errorIcon.style.display = 'inline'; // 느낌표 표시
+				            } else {
+				                errorIcon.style.display = 'none'; // 느낌표 숨기기
+				            }
+				        });
+
+				        // 폼 제출을 방지하려면
+				        if (!isValid) {
+				            event.preventDefault();
+				        }
+				    });
+				</script>
 </body>
 
 </html>

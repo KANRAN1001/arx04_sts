@@ -1,81 +1,92 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:insert="~{layout/header :: header}"></head>
-    <!-- Bootstrap CSS -->
-   
+
+<head th:insert="~{layout/head :: head}"></head>
+<!-- Bootstrap CSS -->
 </head>
+
 <body>
-	<div class="container-fluid">
-	    <div class="row">	
-		<!-- sidebar-->
-		<nav th:replace="~{/layout/body :: sidebar}"></nav>	
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed">
+        <!-- sidebar-->
+        <aside th:replace="~{/layout/body :: sidebar}"></aside>
 		
-		<!-- Main Content -->
-		<main role="main" class="col-md-10 ml-sm-auto px-4">
-		    <h1 class="my-4">로그관리</h1>
-			<div class="row">
+        <!--  Main wrapper -->
+        <div class="body-wrapper">
+            <!--  Header Start -->
+            <header class="app-header">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <h1 class="my-4">로그관리</h1>
+                    <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+                    </div>
+                </nav>
+            </header>
+            <!--  Header End -->
 
-                <!-- 기간별 로그 조회 버튼 -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-calendar-day me-1"></i>
-                        로그 조회
-                    </div>
-                    <div class="card-body">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#searchModal">
-                            <i class="fas fa-search"></i> 검색 조건 설정
-                        </button>
+            <div class="container-fluid">
+                <!--  Row 1 -->
+                <div class="row">
+                    <!-- week line chart-->
+                    <div class="col-lg-12 d-flex" style="width: 100%; height: 100px;">
+                        <div class="card w-100">
+                            <div class="card-body">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#searchModal">
+                                    <i class="fas fa-search"></i> 로그 검색
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 경고 메시지 표시 -->
-                <div th:if="${warning}" class="alert alert-warning" role="alert">
-                    <span th:text="${warning}"></span>
-                </div>
-                
-                <!-- 로그 테이블 -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-table me-1"></i>
-                        오늘 감지된 로그
+                <!-- table -->
+                <div class="col-lg-12 d-flex align-items-stretch">
+                    <div class="card w-100">
+                        <div class="card-body p-4" style="margin-left: -7%;">
+							<div class="card mb-4">
+							    <div class="card-header">
+							        <i class="fas fa-table me-1"></i>
+							        오늘 감지된 로그
+							    </div>
+							        <table id="datatablesSimple" class="table table-bordered">
+							            <thead>
+							                <tr>
+							                    <th>Type</th>
+							                    <th>Rule No</th>
+							                    <th>Source IP</th>
+							                    <th>Source Port</th>
+							                    <th>Destination IP</th>
+							                    <th>Destination Port</th>
+							                    <th>Timestamp</th>
+							                    <th>Violation Time</th>
+							                    <th>Violation Count</th>
+							                    <th>Details</th>
+							                </tr>
+							            </thead>
+							            <tbody>
+							                <tr th:each="log : ${log}">
+							                    <td th:text="${log.type}"></td>
+							                    <td th:text="${log.rule_no}"></td>
+							                    <td th:text="${log.src_ip}"></td>
+							                    <td th:text="${log.src_port}"></td>
+							                    <td th:text="${log.dst_ip}"></td>
+							                    <td th:text="${log.dst_port}"></td>
+							                    <td th:text="${log.time_stamp}"></td>
+							                    <td th:text="${log.violation_time}"></td>
+							                    <td th:text="${log.violation_cnt}"></td>
+							                    <td>
+							                        <a th:href="@{/LogDetail(payload=${log.payloadHex})}" class="btn btn-primary"> <i class="fas fa-search"></i></a>
+							                    </td>
+							                </tr>
+							            </tbody>
+							        </table>
+							</div>
+                        </div>
                     </div>
-                        <table id="datatablesSimple" class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Rule No</th>
-                                    <th>Source IP</th>
-                                    <th>Source Port</th>
-                                    <th>Destination IP</th>
-                                    <th>Destination Port</th>
-                                    <th>Timestamp</th>
-                                    <th>Violation Time</th>
-                                    <th>Violation Count</th>
-                                    <th>Details</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="log : ${log}">
-                                    <td th:text="${log.type}"></td>
-                                    <td th:text="${log.rule_no}"></td>
-                                    <td th:text="${log.src_ip}"></td>
-                                    <td th:text="${log.src_port}"></td>
-                                    <td th:text="${log.dst_ip}"></td>
-                                    <td th:text="${log.dst_port}"></td>
-                                    <td th:text="${log.time_stamp}"></td>
-                                    <td th:text="${log.violation_time}"></td>
-                                    <td th:text="${log.violation_cnt}"></td>
-                                    <td>
-                                        <a th:href="@{/LogDetail(payload=${log.payloadHex})}" class="btn btn-primary"> <i class="fas fa-search"></i></a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
                 </div>
-			</div>
-		</main>
-	    </div>
-	</div>
+            </div>
+        </div>
+    </div>
 
     <!-- 모달 다이얼로그 -->
     <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
@@ -139,25 +150,29 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="minViolationTime">최소 Violation Time</label>
-                                    <input type="number" step="0.01" id="minViolationTime" name="minViolationTime" class="form-control">
+                                    <input type="number" step="0.01" id="minViolationTime" name="minViolationTime"
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="maxViolationTime">최대 Violation Time</label>
-                                    <input type="number" step="0.01" id="maxViolationTime" name="maxViolationTime" class="form-control">
+                                    <input type="number" step="0.01" id="maxViolationTime" name="maxViolationTime"
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="minViolationCnt">최소 Violation Count</label>
-                                    <input type="number" id="minViolationCnt" name="minViolationCnt" class="form-control">
+                                    <input type="number" id="minViolationCnt" name="minViolationCnt"
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="maxViolationCnt">최대 Violation Count</label>
-                                    <input type="number" id="maxViolationCnt" name="maxViolationCnt" class="form-control">
+                                    <input type="number" id="maxViolationCnt" name="maxViolationCnt"
+                                        class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -165,7 +180,8 @@
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-search"></i> 조회
                             </button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="resetForm()">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                onclick="resetForm()">
                                 <i class="fas fa-times"></i> 초기화
                             </button>
                         </div>
@@ -176,23 +192,23 @@
     </div>
 
     <!-- Bootstrap JS -->
-	
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-	    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-		
-		<script>
-		    $(document).ready(function() {
-		        $('#datatablesSimple').DataTable({
-		            "pageLength": 10, // Number of rows to display per page
-		            "lengthMenu": [10, 20, 50, 100] // Options for number of rows to display per page
-		        });
-		    });
-		</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#datatablesSimple').DataTable({
+                "pageLength": 10, // Number of rows to display per page
+                "lengthMenu": [10, 20, 50, 100] // Options for number of rows to display per page
+            });
+        });
+    </script>
 
     <!-- 스크립트 유지 -->
-<!--    <script th:replace="~{/layout/js :: js1}"></script>
+    <!--    <script th:replace="~{/layout/js :: js1}"></script>
     <script th:replace="~{/layout/js :: js2}"></script>
     <script th:replace="~{/layout/js :: js3}"></script>
     <script th:replace="~{/layout/js :: js4}"></script>
@@ -210,4 +226,5 @@
         }
     </script>
 </body>
+
 </html>
