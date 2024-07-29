@@ -104,7 +104,7 @@ public class DashboardController {
 		}
 		model.addAttribute("today_pattern_count", today_pattern_count);
 
-		// 최근 로깅 5건을 받아서 넘겨줌
+		// 최근 로깅 10건을 받아서 넘겨줌
 		List<LoggingTable> loggingTable = dashboardService.getWeekLogging();
 		model.addAttribute("loggingTable", loggingTable);
 		System.out.println(loggingTable);

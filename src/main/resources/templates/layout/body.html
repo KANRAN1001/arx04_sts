@@ -1,63 +1,16 @@
 <!-- 네비게이션바 및 사이드바 외부 코드 -->
 
- <!-- navbar fragment -->
-<div th:fragment="navigation" class="navi">
-	<nav class="navbar">
-		<ul class="navbar-container">
-			<li > <a href="#" class="active"> ARX04 </a></li>
-			<li> <a href="#"> DB보안 4기 프로젝트 </a></liclass="nav-item">
-			<li > <a href="#"> C++, JAVA 개발자 과정 </a></li>
-			<li > <a href="#"> 데이터베이스 공격 탐지 및 차단 </a></li>
-			<li > <a href="#"> 생광좀 </a></li>
-		</ul>
-	</nav>
-</div>
-<!-- sidebar fragment -->
-<!-- <div th:fragment="sidebar" class="sidebar">
- 	<ul class="sidebar-container">
- 		<li > <a href="/dashboard"> Main </a></li>
- 		<li>  <a href="/Log"> 로그관리 </a></liclass="nav-item">
- 		<li > <a href="/policyManager"> 정책관리 </a></li>
- 		<li > <a href="/userManager"> 유저관리 </a></li>
- 		<li > <a href="#"> 생광좀</a></li>
-	 </ul>
-</div>-->
-
-
-<nav class="col-md-2 sidebar" >
-    <div class="sidebar-header">
-        <h4 class="text-center">ARX04</h4>
-        <p class="text-center">프로젝트 명</p>
-    </div>
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link active" href="/dashboard">Main</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/Log">로그관리</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/policyManager">정책관리</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/userManager">유저관리</a>
-        </li>
-    </ul>
-</nav>
-
-
 <aside class="left-sidebar" th:fragment="sidebar">
   <!-- Sidebar scroll-->
   <div>
     <div class="brand-logo d-flex align-items-center justify-content-between">
       <a href="./dashboard" class="text-nowrap logo-img">
-        <img src="../assets/images/logos/dark-logo.svg" width="180" alt="" />
+        <img src="/img/arx04_logo.png" width="180" alt="" />
       </a>
       <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
         <i class="ti ti-x fs-8"></i>
       </div>
     </div>
-	
 	
     <!-- Sidebar navigation-->
     <nav class="sidebar-nav scroll-sidebar" data-simplebar="" >

@@ -45,7 +45,7 @@
 	
 	<!-- getWeekLogging() 인터페이스와 연동되는 쿼리문 / 최근 5건의 로깅건을 반환-->
 	<select id="getWeekLogging" resultType="com.example.demo.dto.dashboard.LoggingTable" parameterType="String"> 
-		SELECT TYPE, rule_no, src_ip, time_stamp, payload FROM ips_log_20240724 order by time_stamp desc limit 5;
+		SELECT TYPE, rule_no, src_ip, time_stamp, payload FROM ips_log_20240724 order by time_stamp desc limit 10;
 	</select>
 	
 	<select id="getActivePolicy" resultType="com.example.demo.dto.Policy"> 
