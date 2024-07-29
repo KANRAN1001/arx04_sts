@@ -71,7 +71,7 @@ public interface DashboardDao {
 	 * @param  : List<String> list 날짜를 문자열로 리스트에 담아 매개변수에 전달 
 	 * @return : List<Week> 날짜별로 패턴기반 탐지 횟수를 반환
 	 */ 
-	public List<IpLog> getIpLogging();
+	public List<IpLog> getIpLogging(String today);
 	
 	/* public List<Policy> getActivePolicy(); */
 }

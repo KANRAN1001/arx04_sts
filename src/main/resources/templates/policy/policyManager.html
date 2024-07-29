@@ -63,6 +63,7 @@
                                         <th >action_type</th>
                                         <th >create_date</th>
                                         <th >modify_date</th>
+										<th >수정</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,14 +72,11 @@
                                         <td th:text="${iterstat.index + 1}" ></td>
                                         <td >
                                             <button type="button"
-                                                th:onclick="update_activation(event,[[${policy.rule_no}]], [[${policy.activation}]])"
-                                                value="1" class="btn btn-link">
-                                                <img id="activationImage-[[${policy.rule_no}]]"
-                                                    th:src="${policy.activation == 0 ? '/img/off.png' : '/img/on.png'}"
-                                                    width="40" height="30">
+                                                th:onclick="update_activation(event,[[${policy.rule_no}]], [[${policy.activation}]])"class="btn btn-link">
+     										   <i id="toggle" th:classappend="${policy.activation == 0 ? 'fas fa-toggle-off' : 'fas fa-toggle-on'}"></i>
                                             </button>
                                         </td>
-                                        <form th:action="@{/modify}" method="post" class="m-0">
+                                        <form th:action="@{'modify/' + ${policy.rule_no}}" method="post" class="m-0">
                                             <td th:text="${policy.rule_no}" name="rule_no" ></td>
                                             <td th:text="${policy.from_ip}" name="from_ip" ></td>
                                             <td th:text="${policy.to_ip}" name="to_ip" ></td>
@@ -100,8 +98,7 @@
                                             <td th:text="${policy.modify_date}" name="modify_date" >
                                             </td>
                                             <td >
-                                                <input type="submit" th:formaction="@{'modify/' + ${policy.rule_no}}"
-                                                    class="btn btn-primary" value="수정">
+												<button class="btn btn-link"> <i class="fas fa-edit"></i></button>
                                             </td>
                                         </form>
                                     </tr>
@@ -347,12 +344,13 @@
                             let target = event.target;
                             console.log(target);
 
-                            if (target.value == 1) {
-                                target.src = '/img/off.png';
-                                target.value = 0;
+                            if (target.classList.contains('fa-toggle-off')) {
+                                target.classList.remove('fa-toggle-off');
+								target.classList.add('fa-toggle-on');
+								
                             } else {
-                                target.src = '/img/on.png';
-                                target.value = 1;
+								target.classList.remove('fa-toggle-on');
+								target.classList.add('fa-toggle-off');
                             }
 
                             alert("변경 되었습니다.");

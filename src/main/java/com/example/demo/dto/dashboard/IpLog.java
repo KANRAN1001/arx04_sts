@@ -11,4 +11,9 @@ import lombok.Data;
 public class IpLog {
 	private String src_ip;
 	private int count;
+	
+	public IpLog(String src_ip, int count) {
+        this.src_ip = src_ip;
+        this.count = count;
+	}
 }

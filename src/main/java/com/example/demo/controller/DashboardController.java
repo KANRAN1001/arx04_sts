@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.demo.dto.dashboard.Behavior;
@@ -47,9 +46,9 @@ public class DashboardController {
 		String today = currentDate.format(customFormatter);
 		model.addAttribute("today", today);
 		
+		// 일주일치의 테이블을 가지고 옴
 		List<String> week_table = dashboardService.getWeekTable();
 		System.out.println(week_table);
-		
 		
 		// 일주일간의 행동기반 로깅 갯수를 model로 html로 넘겨줌
 		List<Week> week_behavior = dashboardService.getWeekBehaviorCount();
@@ -77,25 +76,21 @@ public class DashboardController {
 	//	model.addAttribute("list", list); // html에 model객체로 전달
 
 		
-		
 		// 당일 행동기반 로깅 갯수를 정책별로 model로 html로 넘겨줌
 		List<Behavior> behavior = dashboardService.getTodayBehaviorCount(today);
 		model.addAttribute("behavior", behavior);
-
-		System.out.println("획안용: " + behavior);
-
-		// 당일 패턴기반 로깅 갯수를 정책별로 model로 html로 넘겨줌
-		List<Pattern> pattern = dashboardService.getTodayPatternCount(today);
-		model.addAttribute("pattern", pattern);
-
-
-
+		
 		// 당일 행동기반 로깅 갯수를 구해서 넘겨줌
 		int today_behavior_count = 0;
 		for (int i = 0; i < behavior.size(); i++) {
 			today_behavior_count += behavior.get(i).getCount();
 		}
 		model.addAttribute("today_behavior_count", today_behavior_count);
+
+
+		// 당일 패턴기반 로깅 갯수를 정책별로 model로 html로 넘겨줌
+		List<Pattern> pattern = dashboardService.getTodayPatternCount(today);
+		model.addAttribute("pattern", pattern);
 
 		// 당일 패턴기반 로깅 갯수를 구해서 넘겨줌
 		int today_pattern_count = 0;
@@ -104,14 +99,22 @@ public class DashboardController {
 		}
 		model.addAttribute("today_pattern_count", today_pattern_count);
 
+		// IP별 로깅 횟수를 넘겨줌
+		List<IpLog> ipLogging = dashboardService.getIpLogging(today);
+		model.addAttribute("ipLogging", ipLogging);
+		
+		int today_ip_count = 0;
+		for (int i = 0; i < ipLogging.size(); i++) {
+			today_ip_count += ipLogging.get(i).getCount();
+		}
+		model.addAttribute("today_ip_count", today_ip_count);
+
 		// 최근 로깅 10건을 받아서 넘겨줌
 		List<LoggingTable> loggingTable = dashboardService.getWeekLogging();
 		model.addAttribute("loggingTable", loggingTable);
 		System.out.println(loggingTable);
 
-		// IP별 로깅 횟수를 넘겨줌
-		List<IpLog> ipLogging = dashboardService.getIpLogging();
-		model.addAttribute("ipLogging", ipLogging);
+
 
 		return "dashboard";
 	}

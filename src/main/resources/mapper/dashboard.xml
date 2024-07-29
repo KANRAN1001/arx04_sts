@@ -53,8 +53,8 @@
 	</select>
 	
 	<!-- getIpLogging() 인터페이스와 연동되는 쿼리문 / IP별 로깅 횟수를 반환  -->
-	<select id="getIpLogging" resultType="java.util.Map"> 
-		SELECT src_ip, count(*) as count FROM ips_log_20240724 group by src_ip;
+	<select id="getIpLogging" resultType="com.example.demo.dto.dashboard.IpLog"> 
+		SELECT src_ip, count(*) as count FROM ips_log_${today} group by src_ip;
 	</select>
 	
 </mapper>

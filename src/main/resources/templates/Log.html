@@ -48,8 +48,8 @@
 							        <i class="fas fa-table me-1"></i>
 							        오늘 감지된 로그
 							    </div>
-							        <table id="datatablesSimple" class="table table-bordered">
-							            <thead>
+							        <table id="datatablesSimple" class="table table-bordered" >
+							            <thead style="background-color: #007bff;">
 							                <tr>
 							                    <th>Type</th>
 							                    <th>Rule No</th>
@@ -75,7 +75,7 @@
 							                    <td th:text="${log.violation_time}"></td>
 							                    <td th:text="${log.violation_cnt}"></td>
 							                    <td>
-							                        <a th:href="@{/LogDetail(payload=${log.payloadHex})}" class="btn btn-primary"> <i class="fas fa-search"></i></a>
+							                        <a th:href="@{/LogDetail(payload=${log.payloadHex})}"> <i class="fas fa-search"></i></a>
 							                    </td>
 							                </tr>
 							            </tbody>
