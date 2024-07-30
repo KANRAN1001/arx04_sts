@@ -180,7 +180,6 @@
             </div>
         </div>
     </div>
-    </div>
 
 
     <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
@@ -205,6 +204,24 @@
     <script th:replace="~{/js/dailyBehaviorChart :: dailyBehaviorChart}">	</script>
     <!--ip log chart -->
     <script th:replace="~{/js/dailyIpChart :: dailyIpChart}">	</script>
+	
+	<script>
+	    document.addEventListener('DOMContentLoaded', function() {
+	        // 현재 페이지의 URL 경로를 가져옴
+	        const currentPath = window.location.pathname;
+
+	        // 모든 사이드바 링크를 가져옴
+	        const sidebarLinks = document.querySelectorAll('.sidebar-link');
+
+	        sidebarLinks.forEach(link => {
+	            // 링크의 href 속성과 현재 페이지의 URL을 비교
+	            if (link.getAttribute('href') === currentPath) {
+	                // 일치하는 링크에 active 클래스 추가
+	                link.classList.add('active');
+	            }
+	        });
+	    });
+	</script>
 </body>
 
 </html>

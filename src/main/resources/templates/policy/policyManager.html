@@ -90,9 +90,8 @@
                                             </td>
                                             <td th:text="${policy.policy_info}" name="policy_info" >
                                             </td>
-                                            <td th:text="${policy.rule_type}" name="rule_type" ></td>
-                                            <td th:text="${policy.action_type}" name="action_type" >
-                                            </td>
+                                            <td th:text="${policy.rule_type == 0 ? '패턴' : '행동'}" name="rule_type" ></td>
+                                            <td th:text="${policy.action_type == 0 ? '로깅' : '차단'}" name="action_type" ></td>
                                             <td th:text="${policy.create_date}" name="create_date" >
                                             </td>
                                             <td th:text="${policy.modify_date}" name="modify_date" >
@@ -286,9 +285,25 @@
                 </div>
             </div>
         </div>
+    </div>
 
+	<script>
+	    document.addEventListener('DOMContentLoaded', function() {
+	        // 현재 페이지의 URL 경로를 가져옴
+	        const currentPath = window.location.pathname;
 
+	        // 모든 사이드바 링크를 가져옴
+	        const sidebarLinks = document.querySelectorAll('.sidebar-link');
 
+	        sidebarLinks.forEach(link => {
+	            // 링크의 href 속성과 현재 페이지의 URL을 비교
+	            if (link.getAttribute('href') === currentPath) {
+	                // 일치하는 링크에 active 클래스 추가
+	                link.classList.add('active');
+	            }
+	        });
+	    });
+	</script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
